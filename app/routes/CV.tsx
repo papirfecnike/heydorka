@@ -1,6 +1,14 @@
 import "./CV.css";
 import cv from "../data/cv";
 import CVSection from "../components/CVSection";
+import type { Route } from "../+types/root";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Dora Makszy portfolio" },
+    { name: "description", content: "Dora Makszy portfolio" },
+  ];
+}
 
 function CV() {
   return (

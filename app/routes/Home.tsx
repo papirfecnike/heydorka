@@ -1,8 +1,15 @@
-import { Link } from "react-router-dom";
-
-
 import speaking from "../data/speaking";
 import profileImage from "../assets/doramakszy.png";
+
+import { Link } from "react-router";
+import type { Route } from "../+types/root";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Dora Makszy portfolio" },
+    { name: "description", content: "Dora Makszy portfolio" },
+  ];
+}
 
 function Home() {
   const upcomingTalks = speaking

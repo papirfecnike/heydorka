@@ -1,15 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
-  const location = useLocation();
-
-  /* Close menu on route change */
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location.pathname]);
 
   /* Load theme from localStorage */
   useEffect(() => {
@@ -26,6 +20,10 @@ function Header() {
     localStorage.setItem("theme", isDark ? "dark" : "light");
   }, [isDark]);
 
+  const closeMenu = () => {
+    setMenuOpen(false)
+  }
+
   return (
     <nav className={menuOpen ? "open" : ""}>
       {/* Hamburger */}
@@ -41,11 +39,11 @@ function Header() {
       {/* Mobile drawer */}
       <div className="mobile-menu">
         <ul id="menuList">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/publications">Publications</Link></li>
-          <li><Link to="/speaking">Speaking</Link></li>
-          <li><Link to="/testimonials">Testimonials</Link></li>
-          <li><Link to="/cv">CV</Link></li>
+          <li><Link onClick={closeMenu} to="/">Home</Link></li>
+          <li><Link onClick={closeMenu} to="/publications">Publications</Link></li>
+          <li><Link onClick={closeMenu} to="/speaking">Speaking</Link></li>
+          <li><Link onClick={closeMenu} to="/testimonials">Testimonials</Link></li>
+          <li><Link onClick={closeMenu} to="/cv">CV</Link></li>
         </ul>
       </div>
 

@@ -1,6 +1,14 @@
 import "./Publications.css";
 import publications from "../data/publications";
 import PublicationItem from "../components/PublicationItem";
+import type { Route } from "../+types/root";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Dora Makszy portfolio" },
+    { name: "description", content: "Dora Makszy portfolio" },
+  ];
+}
 
 function Publications() {
   return (

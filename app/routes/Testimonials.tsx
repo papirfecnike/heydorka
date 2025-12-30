@@ -1,6 +1,14 @@
 import "./Testimonials.css";
 import testimonials from "../data/testimonials";
 import TestimonialCard from "../components/TestimonialCard";
+import type { Route } from "../+types/root";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Dora Makszy portfolio" },
+    { name: "description", content: "Dora Makszy portfolio" },
+  ];
+}
 
 function Testimonials() {
   return (

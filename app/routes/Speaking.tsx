@@ -1,6 +1,14 @@
 import "./Speaking.css";
 import speaking from "../data/speaking";
 import SpeakingItem from "../components/SpeakingItem";
+import type { Route } from "../+types/root";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Dora Makszy portfolio" },
+    { name: "description", content: "Dora Makszy portfolio" },
+  ];
+}
 
 function Speaking() {
   return (
