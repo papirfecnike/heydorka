@@ -1,0 +1,14 @@
+/* =========================================================
+   TESTIMONIALS – QUOTE
+========================================================= */
+
+.testimonial blockquote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m);
+}
+
+.testimonial blockquote p {
+  margin: 0;
+  line-height: 1.6;
+}

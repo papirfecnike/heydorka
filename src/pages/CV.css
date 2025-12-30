@@ -1,0 +1,181 @@
+/* =========================================================
+   CV – PAGE LAYOUT
+========================================================= */
+
+.cv-page {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.cv-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--xl);
+  border-top: 1px solid var(--border);
+  padding-top: var(--m);
+  margin-top: var(--xl);
+  margin-bottom: var(--s);
+}
+
+.cv-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================================
+   GROUP (== speaking-year)
+========================================================= */
+
+.cv-group {
+  margin-bottom: var(--s);
+}
+
+.cv-group:not(:first-of-type) {
+  border-top: 1px solid var(--border);
+  padding-top: var(--m);
+}
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+.cv-page h3 {
+  margin-bottom: var(--m);
+  font-size: var(--h3);
+  color: var(--accent);
+}
+
+/* =========================================================
+   ACCORDION
+========================================================= */
+
+.cv-accordion {
+  margin: 0;
+  padding-top: var(--s);
+}
+
+.cv-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: var(--s) 0;
+}
+
+.cv-summary::-webkit-details-marker {
+  display: none;
+}
+
+.cv-title {
+  position: relative;
+  margin-left: 1rem;
+  font-weight: 600;
+  font-size: var(--text-m);
+  line-height: 1.4;
+}
+
+.cv-title::before {
+  content: "›";
+  position: absolute;
+  left: -1rem;
+  opacity: 0.5;
+  transition: transform var(--fast), opacity var(--fast);
+}
+
+details[open] .cv-title::before {
+  transform: rotate(90deg);
+  opacity: 0.9;
+}
+
+/* =========================================================
+   META LINE
+========================================================= */
+
+.cv-meta-line {
+  display: block;
+  margin-left: 1rem;
+  margin-top: 0.15rem;
+  font-size: var(--text-s);
+  color: var(--text-muted);
+}
+
+.cv-company {
+  font-variant: small-caps;
+}
+
+/* =========================================================
+   ACCORDION CONTENT
+========================================================= */
+
+.cv-content {
+  margin-top: var(--s);
+  margin-left: calc(16px + var(--m));
+  padding: var(--s) var(--m);
+
+  font-size: var(--text-m);
+  line-height: 1.6;
+
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: var(--radius-s);
+
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+
+  transition:
+    max-height 0.35s ease,
+    opacity var(--slow),
+    transform var(--slow);
+}
+
+body.dark .cv-content {
+  background: var(--bg);
+}
+
+details[open] .cv-content {
+  animation: accordion-open 0.4s ease forwards;
+}
+
+details:not([open]) .cv-content {
+  animation: accordion-close 0.25s ease forwards;
+}
+
+.cv-content p {
+  margin-bottom: var(--s);
+  color: var(--text-muted);
+}
+
+.cv-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.cv-skills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+  .cv-grid {
+    grid-template-columns: 1fr;
+    gap: var(--s);
+  }
+
+  .cv-content {
+    margin-left: 0;
+    padding: var(--s);
+  }
+}
