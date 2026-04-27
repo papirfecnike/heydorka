@@ -33,33 +33,33 @@ type RouteFiles = {
     id: "root";
     page: "/" | "/speaking" | "/publications" | "/testimonials" | "/cv";
   };
-  "pages/Home.tsx": {
-    id: "pages/Home";
+  "routes/Home.tsx": {
+    id: "routes/Home";
     page: "/";
   };
-  "./pages/Speaking.tsx": {
-    id: "pages/Speaking";
+  "routes/Speaking.tsx": {
+    id: "routes/Speaking";
     page: "/speaking";
   };
-  "./pages/Publications.tsx": {
-    id: "pages/Publications";
+  "routes/Publications.tsx": {
+    id: "routes/Publications";
     page: "/publications";
   };
-  "./pages/Testimonials.tsx": {
-    id: "pages/Testimonials";
+  "routes/Testimonials.tsx": {
+    id: "routes/Testimonials";
     page: "/testimonials";
   };
-  "./pages/CV.tsx": {
-    id: "pages/CV";
+  "routes/CV.tsx": {
+    id: "routes/CV";
     page: "/cv";
   };
 };
 
 type RouteModules = {
   "root": typeof import("./app/root.tsx");
-  "pages/Home": typeof import("./app/routes/Home.js");
-  "pages/Speaking": typeof import("./app/routes/Speaking.js");
-  "pages/Publications": typeof import("./app/routes/Publications.js");
-  "pages/Testimonials": typeof import("./app/routes/Testimonials.js");
-  "pages/CV": typeof import("./app/routes/CV.js");
+  "routes/Home": typeof import("./app/routes/Home.tsx");
+  "routes/Speaking": typeof import("./app/routes/Speaking.tsx");
+  "routes/Publications": typeof import("./app/routes/Publications.tsx");
+  "routes/Testimonials": typeof import("./app/routes/Testimonials.tsx");
+  "routes/CV": typeof import("./app/routes/CV.tsx");
 };
