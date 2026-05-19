@@ -6,4 +6,5 @@ export default [
                 route("publications", "routes/Publications.tsx"),
                 route("testimonials", "routes/Testimonials.tsx"),
                 route("cv", "routes/CV.tsx"),
+                route("prototype", "routes/Prototype.tsx"),
             ] satisfies RouteConfig;

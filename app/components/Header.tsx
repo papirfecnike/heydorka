@@ -44,6 +44,7 @@ function Header() {
           <li><Link onClick={closeMenu} to="/speaking">Speaking</Link></li>
           <li><Link onClick={closeMenu} to="/testimonials">Testimonials</Link></li>
           <li><Link onClick={closeMenu} to="/cv">CV</Link></li>
+          <li><Link onClick={closeMenu} to="/prototype">Scalable test suite</Link></li>
         </ul>
       </div>
 

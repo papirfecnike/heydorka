@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router";
 import { useEffect, useState } from "react";
 
 import Header from "./components/Header";
@@ -8,11 +8,12 @@ import Speaking from "./pages/Speaking";
 import Publications from "./pages/Publications";
 import Testimonials from "./pages/Testimonials";
 import CV from "./pages/CV";
+import Prototype from "./pages/Prototype";
 
 function App() {
   const [isDark, setIsDark] = useState(false);
 
-  // inicializálás (localStorage → body class)
+  // (localStorage → body class)
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme === "dark") {
@@ -21,7 +22,7 @@ function App() {
     }
   }, []);
 
-  // váltás kezelése
+  // change handling
   useEffect(() => {
     if (isDark) {
       document.body.classList.add("dark");
@@ -43,6 +44,7 @@ function App() {
           <Route path="/publications" element={<Publications />} />
           <Route path="/speaking" element={<Speaking />} />
           <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/prototype" element={<Prototype />} />
         </Routes>
 
         <Footer />
