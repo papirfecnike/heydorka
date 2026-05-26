@@ -3,7 +3,7 @@ function Footer() {
     <footer className="footer">
       <p>
         © 2025 Dora Makszy |{" "}
-        <a href="mailto:makszydorka@gmail.com" className="link">
+        <a href="mailto:makszydorka@pm.me" className="link">
           Contact
         </a>
       </p>
