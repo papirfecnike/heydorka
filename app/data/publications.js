@@ -1,5 +1,43 @@
 const publications = [
   {
+    year: 2026,
+    articles: [
+      {
+        id: "almost-hired-the-silent-filters-of-belonging",
+        title: "Almost hired: the silent filters of belonging",
+        content: [
+        "When I moved to Norway, I thought the difficult part would be adapting to a new country. I expected to learn a different culture, navigate unfamiliar systems, and eventually become fluent in a language I had barely started studying. What I did not expect was that finding a job would become the biggest challenge of all.",
+        "The move itself felt relatively straightforward. I was already working remotely for a Norwegian company, and my manager wanted me to join the team on site. The organization knew my work, trusted my capabilities, and valued what I brought to the table. Norway also appealed to me personally. The culture resonated with me, and my family and I were ready for a new chapter in our lives. Relocating felt like a natural next step.",
+        "Then, only a few months after our arrival, the company went bankrupt.",
+        "Overnight, I found myself unemployed in a country where I had no professional network and only a very limited understanding of the language. Yet I remained optimistic. Norway is internationally connected, English is widely spoken, and I had more than a decade of professional experience behind me. I assumed that while the language might create some friction, competence and experience would ultimately matter more.",
+        "The following nine months challenged that assumption.",
+        "Like many professionals searching for work, I approached the process methodically. I redesigned my portfolio, refined my case studies, and spent countless hours preparing for interviews. At the same time, I studied Norwegian every day, hoping to close what I assumed was the largest gap between myself and local candidates.",
+        "The interviews themselves went well. In fact, they often went exceptionally well. I progressed to final rounds repeatedly and received consistently positive feedback. Employers praised my experience, my approach to problem-solving, and my attitude. Yet despite this, the outcome remained remarkably consistent: the position was offered to someone else.",
+        "At first, I interpreted these decisions as isolated cases. Every recruitment process involves trade-offs, and it is entirely possible for multiple candidates to be qualified for the same role. However, as the months passed, a pattern began to emerge. The feedback was strikingly similar from one company to the next. I was frequently described as one of the strongest candidates, yet somehow never the strongest candidate.",
+        "Eventually, somebody explained what no recruiter had explicitly stated.",
+        " “The other candidate was Norwegian.” ",
+        "The comment was not presented as criticism, nor was it intended as discrimination. It was offered almost as an observation. Yet it changed the way I viewed my experience.",
+        "What I had encountered was not exclusion in the traditional sense. Nobody had questioned my qualifications. Nobody had suggested that immigrants should not be hired. On the contrary, many of the organizations I spoke with actively promoted diversity and inclusion as core values.",
+        "The challenge was something subtler.",
+        "Employers, like all human beings, tend to gravitate toward familiarity. We trust what we understand. We feel more comfortable with people who communicate in ways we recognize, who understand the same cultural references, and who require less interpretation. In hiring decisions, these preferences rarely appear as explicit criteria, yet they often influence outcomes in powerful ways.",
+        "This tendency is understandable. It is also problematic.",
+        "When familiarity becomes a deciding factor, foreign professionals start every hiring process with a disadvantage that has little to do with their actual ability to perform the job. Language proficiency becomes conflated with competence. Cultural familiarity becomes conflated with potential. The ability to fit into an existing environment becomes more valuable than the ability to contribute something new.",
+        "The irony is that many organizations simultaneously claim to value diversity, innovation, and fresh perspectives. Yet diversity only creates value when different perspectives are actually allowed to influence decisions. If organizations consistently select the candidates who feel most familiar, they may be unintentionally filtering out exactly the viewpoints they claim to seek.",
+        "This realization became even more apparent later in my career.",
+        "Eventually, I found an employer that viewed my international background differently. Rather than treating it as a risk, they saw it as a source of perspective. They understood that relocating to a new country, adapting to a different culture, and rebuilding a professional network from scratch demonstrated capabilities that were relevant to the role itself: resilience, adaptability, curiosity, and determination.",
+        "Today, I lead design in that international company and participate in hiring decisions myself. Looking back, I can now see the dynamics from both sides of the table. The uncomfortable truth is that bias rarely appears as overt prejudice. More often, it appears as preference. It manifests in small decisions, reasonable assumptions, and intuitive judgments that feel objective but are often shaped by familiarity.",
+        "This is why discussions about diversity frequently miss the point. The question is not whether organizations support diversity in principle. Most do. The more important question is whether they are willing to challenge their own assumptions about what competence looks like and where it comes from.",
+        "For Norwegian employers, this matters more than ever. The country competes for talent in an increasingly global market. Many industries already struggle to attract experienced professionals, particularly in technology, design, engineering, and other specialized fields. At the same time, highly qualified international candidates continue to encounter barriers that are rarely discussed openly.",
+        "The cost of this is not borne solely by immigrants. Companies also pay the price.",
+        "Every time familiarity outweighs capability, organizations risk losing perspectives that could help them better understand international markets, challenge established assumptions, and develop more innovative solutions. They lose people who have demonstrated an unusual willingness to adapt and learn. They lose experiences that cannot be acquired through education or training alone.",
+        "Diversity is often presented as a moral objective. There is certainly a moral dimension to it. However, it is also a business advantage. Teams composed of people with different backgrounds, experiences, and ways of thinking are often better equipped to solve complex problems than teams built primarily around similarity and comfort.",
+        "For that reason, the conversation should move beyond inclusion as a slogan and toward inclusion as a design challenge. Hiring processes are systems, and systems produce predictable outcomes. If highly qualified international candidates consistently find themselves being ‘almost hired’, then it is worth asking what those systems are actually optimizing for.",
+        "Because the future will not be built by organizations that merely welcome diversity in theory. It will be built by organizations capable of recognizing value before it becomes familiar.",
+        ],
+      },
+    ],
+  },
+  {
     year: 2025,
     articles: [
       {
