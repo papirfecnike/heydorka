@@ -18,6 +18,23 @@ const speaking = [
       },
       {
         id: 2,
+        title: "No researchers were harmed in the making of this test suite",
+        event: "Øredev 2026",
+        date: "4th November 2026",
+        badge: "Upcoming",
+        status: "upcoming",
+        links: [
+          { label: "Event", url: "https://oredev.org/" },
+        ],
+        description: [
+          "What if UX research could move as fast as modern product development — without losing its soul?",
+          "In this talk, I’ll share how I created an automated, self-service UX testing method. When my global design team was out due to the Norwegian holiday season (but deadlines remained), I was forced to be creative: I built a 100% automated test framework with Figma Make that captured real user behavior - clicks, misclicks, task times, and screen recordings - async, flexible, and scalable. Within a week, we collected quantitative insights from dozens of users while freeing time for deep interviews. I even automated CSV analysis to reduce manual work.",
+          "This approach isn’t just a hack - it’s a shift in how UX research can live inside rapid prototyping cycles, powered by creative tooling, async collaboration, and a practical “good enough” mindset.",
+          "You’ll learn how it works, what we discovered (the good, the bad, and the hilarious), and how teams with limited researchers, time, or budget can adapt it.",
+          ]
+      },
+      {
+        id: 3,
         title: "Almost hired: the silent filters of belonging",
         event: "TDC 2026",
         date: "19th October 2026",
@@ -31,7 +48,7 @@ const speaking = [
         ]
       },
       {
-        id: 3,
+        id: 4,
         title: "No time - still insight: build a UX Research tool that scales",
         event: "DDD Europe 2026",
         date: "10-12nd June 2025",
@@ -48,7 +65,7 @@ const speaking = [
           ]
       },
       {
-        id: 4,
+        id: 5,
         title: "No researchers were harmed in the making of this test suite",
         event: "React Norway 2026",
         date: "5th June 2026",
@@ -65,7 +82,7 @@ const speaking = [
           ]
       },
       {
-        id: 5,
+        id: 6,
         title: "Safe by design: the UX of secure banking",
         event: "NDC Security 2026",
         date: "2-5th March 2026",
@@ -85,7 +102,7 @@ const speaking = [
     year: 2025,
     talks: [
       {
-        id: 6,
+        id: 7,
         title: "Knocking on Security's door: how good UX design protects users",
         event: "TDC 2025",
         date: "20th October 2025",
@@ -100,7 +117,7 @@ const speaking = [
           ]
       },
       {
-        id: 7,
+        id: 8,
         title: "The irresistible UX: the psychology of brainwaves and clickbait",
         event: "WADWC 2025",
         date: "9-11th July 2025",
@@ -114,7 +131,7 @@ const speaking = [
         ]
       },
       {
-        id: 8,
+        id: 9,
         title: "The irresistible UX: the psychology of brainwaves and clickbait",
         event: "NDC Oslo 2025",
         date: "19-23th May 2025",
@@ -128,7 +145,7 @@ const speaking = [
         ]
       },
       {
-        id: 9,
+        id: 10,
         title: "The ripple effect: how information architecture transforms your product, company, and (almost) everything",
         event: "NDC Melbourne 2025",
         date: "29th April - 1st May 2025",
@@ -144,7 +161,7 @@ const speaking = [
     year: 2024,
     talks: [
       {
-        id: 10,
+        id: 11,
         title: "How to train your designer?",
         event: "React Day Berlin 2024",
         date: "13-16th December 2024",
@@ -157,7 +174,7 @@ const speaking = [
           ]
       },
       {
-        id: 11,
+        id: 12,
         title: "How to train your designer",
         event: "#HelloStavanger",
         date: "16-17th October 2024",
@@ -170,7 +187,7 @@ const speaking = [
           ]
       },
       {
-        id: 12,
+        id: 13,
         title: "The cost of not having a designer",
         event: "RenderCon Kenya 2024",
         date: "4-5th October 2024",
@@ -183,7 +200,7 @@ const speaking = [
           ]
       },
       {
-        id: 13,
+        id: 14,
         title: "How to grow in UX",
         event: "UX meetup Graz 2024",
         date: "September 2024",
@@ -196,7 +213,7 @@ const speaking = [
           ]
       },
       {
-        id: 14,
+        id: 15,
         title: "The ripple effect: how information architecture transforms your product, company, and (almost) everything",
         event: "World IA day 2024",
         date: "20th August 2024",
@@ -206,7 +223,7 @@ const speaking = [
           ]
       },
       {
-        id: 15,
+        id: 16,
         title: "How to train your designer?",
         event: "DroidCon Berlin 2024",
         date: "3-5th July 2024",
@@ -225,7 +242,7 @@ const speaking = [
     year: 2022,
     talks: [
       {
-        id: 16,
+        id: 17,
         title: "Flawless flows: The psychology of harmonious teamwork",
         event: "JS Conf Japan 2022",
         date: "26th November 2022",
@@ -244,7 +261,7 @@ const speaking = [
     year: 2020,
     talks: [
       {
-        id: 17,
+        id: 18,
         title: "Starting a thread: pin the right questions",
         event: "JS Conf Mexico 2020",
         date: "2-4th November 2020",
