@@ -49,11 +49,25 @@ const speaking = [
       },
       {
         id: 4,
+        title: "The irresistible UX: the psychology of brainwaves and clickbait",
+        event: "Snartup 2026",
+        date: "27th August 2026",
+        badge: "Upcoming",
+        status: "upcoming",
+        links: [
+          { label: "Event", url: "https://snartup.no/fest/program" },
+        ],
+        description: [
+          "What truly shapes us without us even noticing? Sometimes, it’s not the hard stops that define our path, it’s the silent redirections, the invisible “no’s,” and the things no one says out loud. This talk reveals the quiet, systemic ways highly skilled immigrants are shaped - not just by the cultures they enter, but by the coded preferences that decide who gets to belong. I moved to Norway for a job, but soon my employer went bankrupt just months after I arrived. And so began nine months of searching. Nine months of being “almost chosen.” I reached final interviews again and again. Each time, I was told I was an excellent candidate. But each time, the job went to a Norwegian. Not because they were better. But because they were familiar. This isn’t a conspiracy - it’s a pattern. A silent comfort with the known. A national culture that values sameness, even when it claims to welcome diversity. And it has a cost: not just to people like me, but to innovation, creativity, and the richness of perspective that companies quietly forfeit. This talk invites audiences to consider the invisible forces: comfort and unconscious bias that shape careers and cultures more than we care to admit. And it offers a vision of what we could gain if we finally let go of our fear of difference. Because real inclusion doesn’t happen when we let people in. It happens when we let them stay whole.",
+        ]
+      },
+      {
+        id: 5,
         title: "No time - still insight: build a UX Research tool that scales",
         event: "DDD Europe 2026",
         date: "10-12nd June 2025",
         badge: "Upcoming",
-        status: "upcoming",
+        status: "past",
         links: [
           { label: "Event", url: "https://2026.dddeurope.com/speakers/dora-makszy/" },
         ],
@@ -65,12 +79,12 @@ const speaking = [
           ]
       },
       {
-        id: 5,
+        id: 6,
         title: "No researchers were harmed in the making of this test suite",
         event: "React Norway 2026",
         date: "5th June 2026",
         badge: "Upcoming",
-        status: "upcoming",
+        status: "past",
         links: [
           { label: "Event", url: "https://reactnorway.com/" },
         ],
@@ -82,7 +96,7 @@ const speaking = [
           ]
       },
       {
-        id: 6,
+        id: 7,
         title: "Safe by design: the UX of secure banking",
         event: "NDC Security 2026",
         date: "2-5th March 2026",
@@ -102,7 +116,7 @@ const speaking = [
     year: 2025,
     talks: [
       {
-        id: 7,
+        id: 8,
         title: "Knocking on Security's door: how good UX design protects users",
         event: "TDC 2025",
         date: "20th October 2025",
@@ -117,7 +131,7 @@ const speaking = [
           ]
       },
       {
-        id: 8,
+        id: 9,
         title: "The irresistible UX: the psychology of brainwaves and clickbait",
         event: "WADWC 2025",
         date: "9-11th July 2025",
@@ -131,7 +145,7 @@ const speaking = [
         ]
       },
       {
-        id: 9,
+        id: 10,
         title: "The irresistible UX: the psychology of brainwaves and clickbait",
         event: "NDC Oslo 2025",
         date: "19-23th May 2025",
@@ -145,7 +159,7 @@ const speaking = [
         ]
       },
       {
-        id: 10,
+        id: 11,
         title: "The ripple effect: how information architecture transforms your product, company, and (almost) everything",
         event: "NDC Melbourne 2025",
         date: "29th April - 1st May 2025",
@@ -161,7 +175,7 @@ const speaking = [
     year: 2024,
     talks: [
       {
-        id: 11,
+        id: 12,
         title: "How to train your designer?",
         event: "React Day Berlin 2024",
         date: "13-16th December 2024",
@@ -174,7 +188,7 @@ const speaking = [
           ]
       },
       {
-        id: 12,
+        id: 13,
         title: "How to train your designer",
         event: "#HelloStavanger",
         date: "16-17th October 2024",
@@ -187,7 +201,7 @@ const speaking = [
           ]
       },
       {
-        id: 13,
+        id: 14,
         title: "The cost of not having a designer",
         event: "RenderCon Kenya 2024",
         date: "4-5th October 2024",
@@ -200,7 +214,7 @@ const speaking = [
           ]
       },
       {
-        id: 14,
+        id: 15,
         title: "How to grow in UX",
         event: "UX meetup Graz 2024",
         date: "September 2024",
@@ -213,7 +227,7 @@ const speaking = [
           ]
       },
       {
-        id: 15,
+        id: 16,
         title: "The ripple effect: how information architecture transforms your product, company, and (almost) everything",
         event: "World IA day 2024",
         date: "20th August 2024",
@@ -223,7 +237,7 @@ const speaking = [
           ]
       },
       {
-        id: 16,
+        id: 17,
         title: "How to train your designer?",
         event: "DroidCon Berlin 2024",
         date: "3-5th July 2024",
@@ -242,7 +256,7 @@ const speaking = [
     year: 2022,
     talks: [
       {
-        id: 17,
+        id: 18,
         title: "Flawless flows: The psychology of harmonious teamwork",
         event: "JS Conf Japan 2022",
         date: "26th November 2022",
@@ -261,7 +275,7 @@ const speaking = [
     year: 2020,
     talks: [
       {
-        id: 18,
+        id: 19,
         title: "Starting a thread: pin the right questions",
         event: "JS Conf Mexico 2020",
         date: "2-4th November 2020",
