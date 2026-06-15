@@ -66,7 +66,6 @@ const speaking = [
         title: "No time - still insight: build a UX Research tool that scales",
         event: "DDD Europe 2026",
         date: "10-12nd June 2025",
-        badge: "Upcoming",
         status: "past",
         links: [
           { label: "Event", url: "https://2026.dddeurope.com/speakers/dora-makszy/" },
@@ -83,7 +82,6 @@ const speaking = [
         title: "No researchers were harmed in the making of this test suite",
         event: "React Norway 2026",
         date: "5th June 2026",
-        badge: "Upcoming",
         status: "past",
         links: [
           { label: "Event", url: "https://reactnorway.com/" },
