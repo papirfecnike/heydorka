@@ -1,1 +1,0 @@
-import{w as e,p as t}from"./chunk-5KNZJZUH-LWKpqoMq.js";const o=e(function(){return t.jsx("div",{className:"prototype",children:t.jsx("iframe",{src:"https://nimbus-hazy-63781183.figma.site",title:"No researchers were harmed in the making of this test suite",style:{width:"100%",height:"100vh",border:"none"}})})});export{o as default};
