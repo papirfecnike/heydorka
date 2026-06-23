@@ -20,6 +20,11 @@ type Pages = {
   "/publications": {
     params: {};
   };
+  "/publications/:id": {
+    params: {
+      "id": string;
+    };
+  };
   "/testimonials": {
     params: {};
   };
@@ -34,7 +39,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/speaking" | "/publications" | "/testimonials" | "/cv" | "/prototype";
+    page: "/" | "/speaking" | "/publications" | "/publications/:id" | "/testimonials" | "/cv" | "/prototype";
   };
   "routes/Home.tsx": {
     id: "routes/Home";
@@ -47,6 +52,10 @@ type RouteFiles = {
   "routes/Publications.tsx": {
     id: "routes/Publications";
     page: "/publications";
+  };
+  "routes/PublicationArticle.tsx": {
+    id: "routes/PublicationArticle";
+    page: "/publications/:id";
   };
   "routes/Testimonials.tsx": {
     id: "routes/Testimonials";
@@ -67,6 +76,7 @@ type RouteModules = {
   "routes/Home": typeof import("./app/routes/Home.tsx");
   "routes/Speaking": typeof import("./app/routes/Speaking.tsx");
   "routes/Publications": typeof import("./app/routes/Publications.tsx");
+  "routes/PublicationArticle": typeof import("./app/routes/PublicationArticle.tsx");
   "routes/Testimonials": typeof import("./app/routes/Testimonials.tsx");
   "routes/CV": typeof import("./app/routes/CV.tsx");
   "routes/Prototype": typeof import("./app/routes/Prototype.tsx");
