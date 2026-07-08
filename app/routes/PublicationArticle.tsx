@@ -9,7 +9,12 @@ export function meta({ params }: Route.MetaArgs) {
   for (const yearGroup of publications) {
     const article = yearGroup.articles.find((a) => a.id === id);
     if (article) {
-      return [{ title: `${article.title} – Dora Makszy` }];
+      return [
+        { title: `${article.title} – Dora Makszy` },
+        ...(article.description
+          ? [{ name: "description", content: article.description }]
+          : []),
+      ];
     }
   }
   return [{ title: "Article – Dora Makszy" }];
@@ -46,7 +51,12 @@ function PublicationArticle() {
       <section className="card">
         <Link to="/publications" className="back-link">← Publications</Link>
         <p className="article-year">{year}</p>
-        <h1>{article.title}</h1>
+        <h1>
+          {article.title}
+          {article.badge && (
+            <span className="speaking-badge">{article.badge}</span>
+          )}
+        </h1>
         <div className="article-content">
           {article.content.map((block, index) =>
             renderContentBlock(block, index)

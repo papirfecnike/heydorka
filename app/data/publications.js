@@ -3,6 +3,23 @@ const publications = [
     year: 2026,
     articles: [
       {
+        id: "what-design-leadership-means-in-the-agentic-era",
+        title: "What design leadership means in the agentic era",
+        badge: "AI MANIFESTO",
+        description: "AI moves the work faster. That makes craft, judgment, and human experience more valuable — not less. And it makes how you lead a team matter more than ever.",
+        content: [
+        "I’ve never been comfortable telling people exactly what to do. For a long time I assumed that was a gap I’d have to fix to be a design leader. It turned out to be the job. Approving pixels was never the point; growing the judgment of the people making them was, mostly through honest, regular design critique. You raise a designer by discussing the work with them, not by correcting it for them.",
+        "AI hasn’t changed that belief. It’s made it the whole game.",
+        "What it has changed is what critique is about. We used to spend a lot of that time on craft: spacing, hierarchy, the detail that felt slightly off. That part is cheap now. An agent can produce a clean, competent screen in seconds, and it can hold real discipline while it does it. I can hand it our principles, our accessibility rules, our writing standards, wrap them in skills and guardrails, and it will follow them more patiently than any of us at the end of a long day.",
+        "What it can’t do is decide whether the result actually solved the problem. Whether it’s right for the person on the other end: a warehouse operator halfway through a hard shift, not a persona on a slide. That call doesn’t come from a model. It comes from having sat with real users, argued the trade-offs, and cared how it turns out.",
+        "So the conversation has moved up. In a critique now we spend less time on “what looks wrong here” and more on “does this serve the user, and how would we actually know.” You can tell an agent to follow the principles. A human still has to decide whether it did, and whether following them led somewhere worth shipping. That decision is the work.",
+        "It’s also why I coach harder than I used to, not less. When a designer can generate ten directions before lunch, I can’t be the bottleneck reviewing each one. I’d drown, and honestly it would insult them. What I can do is make sure the people around me have the judgment to steer: to see which of those ten is the one worth having, and say why. I’d still rather grow that instinct than hand out approvals.",
+        "There’s one more thing I hold onto. AI is remarkable at recombining what already exists. It can remix a hundred references and get you to a reasonable answer fast. It doesn’t originate. The genuinely new idea, the reframe, the quiet “wait, the whole flow is wrong,” still comes from a person. Protecting the time and the nerve for people to have those ideas is worth more than anything else in my toolkit.",
+        "I’m not precious about any of this. I use AI every day, but always on purpose, for the parts that don’t need me. The “on purpose” matters more than it sounds, because AI isn’t as cheap as a single prompt makes it feel. Zoom out to the data centers behind it, the power and the water, and there’s a real cost to all that generating, even when I can’t see it from my desk. So I don’t spin up ten directions when two will do, or reach for a model just because it’s there. Used with that kind of care, it frees my team to spend themselves on the work that actually needs them.",
+        "The tools will keep changing, and I’ll keep trying them. The core of the job hasn’t moved: grow good people, and keep everyone honest about who we’re really building for.",
+        ],
+      },
+      {
         id: "almost-hired-the-silent-filters-of-belonging",
         title: "Almost hired: the silent filters of belonging",
         content: [

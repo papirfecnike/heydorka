@@ -398,6 +398,35 @@ nav {
   align-items: start;
 }
 
+.hero-photo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s);
+}
+
+.hero-eyebrow {
+  margin: 0 0 var(--xs);
+  font-size: var(--text-s);
+  font-weight: 300;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero-status {
+  max-width: var(--profile-image-max-width);
+  margin: 0 0 var(--m);
+  font-size: var(--text-s);
+  color: var(--text-muted);
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s);
+  margin-top: var(--m);
+}
+
 /* =========================================================
    SPEAKING / PUBLICATIONS / CV (ACCORDION)
 ========================================================= */

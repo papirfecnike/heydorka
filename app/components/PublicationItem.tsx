@@ -5,7 +5,12 @@ function PublicationItem({ publication }) {
   return (
     <details className="accordion-section">
       <summary className="speaking-summary">
-        <span className="speaking-title">{publication.title}</span>
+        <span className="speaking-title">
+          {publication.title}
+          {publication.badge && (
+            <span className="speaking-badge">{publication.badge}</span>
+          )}
+        </span>
         <Link
           to={`/publications/${publication.id}`}
           className="publication-link"
