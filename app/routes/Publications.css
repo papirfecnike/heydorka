@@ -43,12 +43,13 @@
   cursor: pointer;
   padding: var(--s) 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--s);
 }
 
 .publication-link {
   flex-shrink: 0;
+  margin-top: 2px;
   font-size: 0.8rem;
   opacity: 0.4;
   color: var(--accent);
@@ -68,10 +69,18 @@
   font-weight: 600;
   line-height: 1.4;
   flex: 1;
+  /* Flex items default to a min-width based on their content's
+     intrinsic width, which for a long title can be wider than the
+     row itself — that was silently pushing the whole row (and the
+     "open article" icon with it) wider than the screen instead of
+     letting the title wrap. */
+  min-width: 0;
 }
 
 .publications-page .speaking-title .speaking-badge {
+  display: inline-block;
   margin-left: var(--s);
+  white-space: nowrap;
   vertical-align: middle;
 }
 
@@ -190,12 +199,15 @@ body.dark .publications-page .accordion-content {
 ========================================================= */
 
 @media (max-width: 800px) {
+  /* Row layout stays the same on mobile — title on the left (wrapping
+     to multiple lines if needed, via min-width: 0 above), the "open
+     article" icon fixed to the right. */
+  .publications-page .speaking-title {
+    margin-left: 1rem;
+  }
+
   .publications-page .accordion-content {
     margin-left: 0;
     padding: var(--s);
-  }
-
-  .publications-page .speaking-title {
-    margin-left: 1rem;
   }
 }

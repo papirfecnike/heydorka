@@ -42,6 +42,7 @@ function Header() {
           <li><Link onClick={closeMenu} to="/">Home</Link></li>
           <li><Link onClick={closeMenu} to="/publications">Publications</Link></li>
           <li><Link onClick={closeMenu} to="/speaking">Speaking</Link></li>
+          <li><Link onClick={closeMenu} to="/craft">Craft</Link></li>
           <li><Link onClick={closeMenu} to="/testimonials">Testimonials</Link></li>
           <li><Link onClick={closeMenu} to="/cv">CV</Link></li>
           <li><Link onClick={closeMenu} to="/prototype">Scalable test suite</Link></li>

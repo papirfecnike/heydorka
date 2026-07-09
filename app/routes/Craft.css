@@ -1,0 +1,318 @@
+/* =========================================================
+   CRAFT – LAYOUT
+========================================================= */
+
+.craft-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.craft-intro {
+  max-width: none;
+  font-size: var(--text-l);
+  white-space: nowrap;
+}
+
+/* =========================================================
+   CASE STUDY ACCORDIONS
+========================================================= */
+
+.craft-case {
+  margin-top: var(--l);
+  padding-top: var(--l);
+  border-top: 2px solid rgba(130, 16, 217, 0.25);
+  scroll-margin-top: 5rem;
+}
+
+.craft-case:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.craft-case-summary {
+  position: sticky;
+  top: 5rem;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  cursor: pointer;
+  padding: var(--s) 0;
+  background: var(--surface);
+  list-style: none;
+}
+
+.craft-case-summary::-webkit-details-marker {
+  display: none;
+}
+
+.craft-case-title {
+  position: relative;
+  margin-left: 1.25rem;
+  font-size: var(--h3);
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Chevron */
+.craft-case-title::before {
+  content: "›";
+  position: absolute;
+  left: -1.25rem;
+  opacity: 0.5;
+  transform: rotate(0deg);
+  transition: transform var(--fast), opacity var(--fast);
+}
+
+details[open] > .craft-case-summary .craft-case-title::before {
+  transform: rotate(90deg);
+  opacity: 0.9;
+}
+
+.craft-case-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s);
+  margin-left: 1.25rem;
+  font-size: var(--small);
+}
+
+.craft-role {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.craft-focus {
+  color: var(--text-muted);
+}
+
+/* Override the site-wide accordion animation: the global version caps
+   height at 3000px, which clips long case studies (images + carousel
+   can easily push past that). Craft's accordions instead expand to
+   their full natural height (the page scrolls normally), while the
+   summary above stays sticky as a little title label while you scroll
+   through that case study's content. */
+.craft-case .accordion-content {
+  margin-top: var(--m);
+  margin-left: 0;
+  padding: var(--xl);
+  background: none;
+}
+
+.craft-case[open] .accordion-content {
+  max-height: none;
+  overflow: visible;
+  animation: craft-accordion-open 0.3s ease forwards;
+}
+
+.craft-case:not([open]) .accordion-content {
+  animation: craft-accordion-close 0.2s ease forwards;
+}
+
+@keyframes craft-accordion-open {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes craft-accordion-close {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   NOTE / DISCLAIMER
+========================================================= */
+
+.craft-note {
+  margin: var(--l) 0 0;
+  font-size: var(--body);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.craft-case h3 {
+  margin-top: var(--l);
+  font-size: var(--text-l);
+}
+
+.craft-approach {
+  margin: 0 0 var(--m);
+  padding-left: var(--l);
+  color: var(--text-muted);
+}
+
+.craft-approach li {
+  margin-bottom: var(--s);
+  padding-left: var(--xs);
+}
+
+.craft-approach li strong {
+  color: var(--text);
+}
+
+.craft-visual-pending {
+  margin: var(--m) 0 var(--l);
+  padding: var(--l);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-m);
+  font-size: var(--text-s);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.craft-visual-pending code {
+  padding: 2px 6px;
+  border-radius: var(--radius-s);
+  background: var(--surface);
+}
+
+/* =========================================================
+   FIGURE BLOCK (image + "Figure N." caption, no container)
+========================================================= */
+
+.craft-figure-block {
+  margin: var(--m) 0 var(--l);
+  text-align: center;
+}
+
+.craft-figure-block img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--border);
+}
+
+.craft-figure-caption {
+  margin: var(--s) 0 0;
+  font-size: var(--text-s);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+/* Several figures side by side on desktop (e.g. three "before"
+   screenshots), stacked on mobile. */
+.craft-figure-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--l);
+  margin: var(--m) 0 var(--l);
+}
+
+.craft-figure-row .craft-figure-block {
+  margin: 0;
+}
+
+/* =========================================================
+   SECTION DIVIDER
+========================================================= */
+
+.craft-section-divider {
+  height: 1px;
+  margin: var(--xl) 0;
+  background: var(--border);
+}
+
+/* =========================================================
+   IMPACT + OUTCOME (side by side on desktop)
+========================================================= */
+
+.craft-impact-outcome {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--xl);
+  align-items: start;
+}
+
+.craft-impact-outcome h3 {
+  margin-top: 0;
+}
+
+/* =========================================================
+   IMPACT / STAT CALLOUTS
+========================================================= */
+
+.craft-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--m);
+  margin: var(--m) 0 var(--l);
+}
+
+.craft-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  padding: var(--m) var(--l);
+  background: var(--accent);
+  border-radius: var(--radius-m);
+  overflow-wrap: break-word;
+}
+
+.craft-stat-number {
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #fff;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.craft-stat-label {
+  font-size: var(--text-s);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+  .craft-intro {
+    white-space: normal;
+  }
+
+  /* The sticky header is the same ~5rem tall at every width (no
+     mobile-specific override in styles.css), so the summary and
+     scroll offset stay at 5rem here too — a smaller value left the
+     summary partly hidden under the header on phones. */
+
+  .craft-case {
+    margin-top: var(--l);
+    padding-top: var(--l);
+  }
+
+  .craft-case .accordion-content {
+    padding: var(--m);
+  }
+
+  .craft-figure-row {
+    grid-template-columns: 1fr;
+    gap: var(--l);
+  }
+
+  .craft-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .craft-impact-outcome {
+    grid-template-columns: 1fr;
+    gap: var(--l);
+  }
+
+  .craft-section-divider {
+    margin: var(--l) 0;
+  }
+}

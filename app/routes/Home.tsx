@@ -31,19 +31,8 @@ function Home() {
                 Currently leading design into agentic workflows at Element
                 Logic
               </p>
-              <div className="hero-actions">
-                <Link to="/prototype" className="link-underline">
-                  → Check out my AI research tool
-                </Link>
-                <Link
-                  to="/publications/what-design-leadership-means-in-the-agentic-era"
-                  className="link-underline"
-                >
-                  → Read my AI point of view
-                </Link>
-              </div>
             </div>
-            <div>
+            <div className="hero-text">
               <p className="hero-eyebrow">
                 Design leadership for the agentic era
               </p>
@@ -57,6 +46,17 @@ function Home() {
               <p>
                 I lead by coaching. I grow the people I work with, and I trust them to own what they build.
               </p>
+            </div>
+            <div className="hero-actions">
+              <Link to="/prototype" className="link-underline">
+                → Check out my AI research tool
+              </Link>
+              <Link
+                to="/publications/what-design-leadership-means-in-the-agentic-era"
+                className="link-underline"
+              >
+                → Read my AI point of view
+              </Link>
             </div>
           </div>
         </section>
