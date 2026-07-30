@@ -146,43 +146,6 @@ function Craft() {
               and interpreting on every single task.
             </p>
 
-            <div className="craft-figure-row">
-              <div className="craft-figure-block">
-                <img
-                  src={elOld1}
-                  alt="Old Putaway screen: a single dense table holding scan, product, and quantity data at once, with a generic placeholder product image."
-                />
-                <p className="craft-figure-caption">
-                  Figure 1. Putaway, as it looked before — one dense screen
-                  holding everything at once
-                </p>
-              </div>
-
-              <div className="craft-figure-block">
-                <img
-                  src={elOld2}
-                  alt="Old Inspection screen: a quantity mismatch handled by a native-style pop-up dialog box."
-                />
-                <p className="craft-figure-caption">
-                  Figure 2. Inspection — quantity mismatches surfaced through
-                  native-style pop-up dialogs
-                </p>
-              </div>
-
-              <div className="craft-figure-block">
-                <img
-                  src={elOld3}
-                  alt="Old Putaway selection screen: scan and filter fields above an unstyled results table."
-                />
-                <p className="craft-figure-caption">
-                  Figure 3. Putaway selection — ad-hoc filters and an
-                  unstyled results table
-                </p>
-              </div>
-            </div>
-
-            <div className="craft-section-divider" />
-
             <h3>My approach</h3>
             <ol className="craft-approach">
               <li>
