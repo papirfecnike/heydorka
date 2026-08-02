@@ -2,12 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import "./Craft.css";
 import type { Route } from "../+types/root";
 
-import elOld1 from "../assets/craft/elementlogic/el_old_01.png";
-import elOld2 from "../assets/craft/elementlogic/el_old_02.png";
-import elOld3 from "../assets/craft/elementlogic/el_old_03.png";
-import elNew1 from "../assets/craft/elementlogic/el_new_01.png";
-import elNew2 from "../assets/craft/elementlogic/el_new_02.png";
-import elNew3 from "../assets/craft/elementlogic/el_new_03.png";
 import futurehomeResearch from "../assets/craft/futurehome/futurehome1.png";
 import futurehomeHierarchy from "../assets/craft/futurehome/futurehome2.png";
 import futurehomePrototype from "../assets/craft/futurehome/futurehome3.png";
@@ -53,11 +47,34 @@ const vccliveUserProblemsPhoto = import.meta.glob(
 ) as Record<string, string>;
 const vccliveUserProblemsImage = Object.values(vccliveUserProblemsPhoto)[0];
 
-type SectionId = "elementlogic" | "futurehome" | "vcclive";
+// Airthings visuals: named files picked up individually so the build
+// doesn't break while some (or all) of them are still missing — drop
+// personas.png, design-direction.png, onboarding.png, everyday.png and
+// sketches.png into app/assets/craft/airthings/ and each one is wired
+// in automatically.
+const airthingsPhotos = import.meta.glob("../assets/craft/airthings/*.png", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+function getAirthingsImage(name: string) {
+  const match = Object.entries(airthingsPhotos).find(([path]) =>
+    path.endsWith(`/${name}.png`)
+  );
+  return match?.[1];
+}
+
+const airthingsPersonas = getAirthingsImage("personas");
+const airthingsProcess = getAirthingsImage("process");
+const airthingsOnboarding = getAirthingsImage("onboarding");
+const airthingsEveryday = getAirthingsImage("everyday");
+const airthingsSketches = getAirthingsImage("sketches");
+
+type SectionId = "airthings" | "futurehome" | "vcclive";
 
 function Craft() {
   const [openMap, setOpenMap] = useState<Record<SectionId, boolean>>({
-    elementlogic: true,
+    airthings: true,
     futurehome: false,
     vcclive: false,
   });
@@ -67,7 +84,7 @@ function Craft() {
     setOpenMap(
       open
         ? {
-            elementlogic: id === "elementlogic",
+            airthings: id === "airthings",
             futurehome: id === "futurehome",
             vcclive: id === "vcclive",
           }
@@ -111,99 +128,238 @@ function Craft() {
       <section className="card">
         <h1>Craft</h1>
 
-        {/* ================= ELEMENT LOGIC ================= */}
+        {/* ================= AIRTHINGS ================= */}
         <details
-          id="elementlogic"
+          id="airthings"
           className="craft-case accordion-section"
-          open={openMap.elementlogic}
-          onToggle={(e) => toggle("elementlogic", e.currentTarget.open)}
+          open={openMap.airthings}
+          onToggle={(e) => toggle("airthings", e.currentTarget.open)}
         >
           <summary className="craft-case-summary">
             <span className="craft-case-title">
-              Element Logic — redesigning putaway with the design system
+              Airthings — from "scientific" to human
             </span>
             <span className="craft-case-meta">
               <span className="craft-role">
-                Senior UX Designer → Head of Design · 2024–present
+                End-to-end UX · Concept work, recruitment exercise
               </span>
               <span className="craft-focus">
-                Flow redesign, UI redesign, applying the design system
+                Personas, onboarding, information design, design process
               </span>
             </span>
           </summary>
 
           <div className="accordion-content">
-            <h3>The challenge</h3>
+            <h3>The brief</h3>
             <p>
-              Putaway is one of the most repeated tasks in eManager — the
-              flow warehouse staff use to confirm where and how much of an
-              item gets stored. The screens behind it had aged: dense
-              tables holding scan, product, and quantity data all at once,
-              mismatches handled through native-style pop-up dialogs, and a
-              selection screen built from ad-hoc filters and an unstyled
-              results table. None of it was broken exactly, but it asked
-              people doing a fast, repetitive job to do too much reading
-              and interpreting on every single task.
+              Airthings' radon-monitoring app looks and feels "scientific."
+              The task: evolve it into something more personal and
+              relevant — an experience that fits a health and wellness
+              brand.
             </p>
 
-            <h3>My approach</h3>
-            <ol className="craft-approach">
+            <h3>At a glance</h3>
+            <ul className="craft-approach">
               <li>
-                <strong>Mapped the existing flow end to end.</strong>{" "}
-                Documented how putaway actually worked from the perspective
-                of the person running it on the warehouse floor, not just
-                what the existing screens showed.
+                <strong>My angle:</strong> reframe the product around how
+                people feel about the air they breathe, not just the data
+                behind it.
               </li>
               <li>
-                <strong>Rebuilt it around three clear steps.</strong> Instead
-                of one dense screen asking for everything at once, I split
-                the task into <em>where</em>, <em>how many</em>, and{" "}
-                <em>what</em> — so at any point, a worker knows exactly what
-                they're being asked and why.
+                <strong>What I designed:</strong> personas, a friendly
+                onboarding, everyday screens, low-fi explorations, and a
+                repeatable design process.
               </li>
-              <li>
-                <strong>Applied Element Logic's existing design system.</strong>{" "}
-                Every component in the new screens — buttons, status pills,
-                cards, tables — came from the design system already in
-                place. My work was choosing and assembling the right pieces
-                for this flow, not designing the system itself.
-              </li>
-              <li>
-                <strong>Rebuilt the supporting list and table views.</strong>{" "}
-                A real search field, consistent status pills, and proper
-                pagination replaced the ad-hoc filters and native dialogs.
-              </li>
-              <li>
-                <strong>Tested it against real warehouse tasks.</strong>{" "}
-                Validated the new flow with the people who'd actually be
-                running it before it shipped.
-              </li>
-            </ol>
+            </ul>
 
-            <p className="craft-note">
-              A note on the design system: I used the predefined design
-              system components during the whole process. My role here was
-              applying and composing those existing components into a
-              clearer layout template, UX flow and UI.
+            <h3>My starting point</h3>
+            <p>
+              You can't humanise a product without the people using it.
+              Airthings already has an engaged user base that gives
+              feedback — so my approach was to listen first, then design.
+              Not redecorating a scientific app, but reframing what it's
+              for: helping people feel good about their home's air.
             </p>
-
-            <ImageCarousel
-              images={[elNew1, elNew2, elNew3]}
-              altPrefix="Redesigned Putaway screen"
-            />
 
             <div className="craft-section-divider" />
 
-            <h3>A note on process</h3>
+            <h3>Who we're designing for</h3>
+            <div className="craft-figure-block">
+              {airthingsPersonas ? (
+                <>
+                  <img
+                    src={airthingsPersonas}
+                    alt="Six personas: Tech-Savvy Homeowner, Health-Conscious Parent, Eco-Friendly Enthusiast, Busy Professional, Budget-Conscious Renter, and Senior Citizen with health concerns — each with their motivation and goals."
+                  />
+                  <p className="craft-figure-caption">
+                    Figure 1. The six personas driving the redesign
+                  </p>
+                </>
+              ) : (
+                <div className="craft-visual-pending">
+                  Personas board goes here (<code>personas.png</code> in{" "}
+                  <code>app/assets/craft/airthings/</code>).
+                </div>
+              )}
+            </div>
             <p>
-              This flow and these screens were designed the traditional
-              way — through careful research and testing with real
-              customers, and close collaboration with the product trio
-              internally. As the agentic era has taken hold, our R&amp;D
-              and UX teams have started experimenting much more with
-              AI-assisted approaches to design and development, so this
-              particular flow may not end up being the final version of
-              Putaway going forward.
+              I mapped six user types — from a tech-savvy homeowner to a
+              senior with health concerns. Each cares about air quality for
+              a different reason: control, family health, sustainability,
+              convenience, budget, safety. This kept the redesign grounded
+              in real motivations instead of assumptions, and made feature
+              priorities easy to defend.
+            </p>
+
+            <div className="craft-section-divider" />
+
+            <h3>The design direction</h3>
+            <p>Four principles guided the work:</p>
+            <ol className="craft-approach">
+              <li>
+                <strong>Lead with the brand, not the science.</strong>{" "}
+                Airthings is already calm, modern and stylish — I leaned
+                into that with a consistent design system, soft imagery and
+                inclusive visuals.
+              </li>
+              <li>
+                <strong>Make the science digestible.</strong> Turn raw
+                readings into plain-language insight, so users grasp what
+                radon or CO₂ means for them without a chemistry lesson.
+              </li>
+              <li>
+                <strong>Talk like a human.</strong> Empathetic, actionable
+                notifications ("here's what this means for you") instead of
+                clinical alerts.
+              </li>
+              <li>
+                <strong>Support the whole wellness journey.</strong>{" "}
+                Personal dashboards, goals, progress over time, and gentle
+                wellness touches like guided breathing.
+              </li>
+            </ol>
+
+            <div className="craft-section-divider" />
+
+            <h3>Onboarding — discover before you commit</h3>
+            <div className="craft-figure-block">
+              {airthingsOnboarding ? (
+                <>
+                  <img
+                    src={airthingsOnboarding}
+                    alt="Onboarding flow: welcome screen, how to use the app, key terms explained in plain language, and a final setup step."
+                  />
+                  <p className="craft-figure-caption">
+                    Figure 2. Onboarding — explore before connecting a device
+                  </p>
+                </>
+              ) : (
+                <div className="craft-visual-pending">
+                  Onboarding screens go here (<code>onboarding.png</code> in{" "}
+                  <code>app/assets/craft/airthings/</code>).
+                </div>
+              )}
+            </div>
+            <p>
+              The onboarding welcomes users, explains key terms in friendly
+              language, and lets them explore the app before connecting a
+              device. Positive tone, simple illustrations, no information
+              overload.
+            </p>
+
+            <div className="craft-section-divider" />
+
+            <h3>The everyday experience</h3>
+            <div className="craft-figure-block">
+              {airthingsEveryday ? (
+                <>
+                  <img
+                    src={airthingsEveryday}
+                    alt="Everyday screens: a lock-screen air quality notification, a room-level air quality summary with a knowledge centre, a contaminant trend chart, and a personal wellness summary."
+                  />
+                  <p className="craft-figure-caption">
+                    Figure 3. Everyday screens — room air quality, trends,
+                    and a personal summary
+                  </p>
+                </>
+              ) : (
+                <div className="craft-visual-pending">
+                  Everyday screens go here (<code>everyday.png</code> in{" "}
+                  <code>app/assets/craft/airthings/</code>).
+                </div>
+              )}
+            </div>
+            <p>
+              Room-level air quality at a glance, a knowledge centre for the
+              curious, clear trends over time, and a personal summary that
+              treats air quality as part of overall wellbeing.
+            </p>
+
+            <div className="craft-section-divider" />
+
+            <h3>From idea to screen</h3>
+            <div className="craft-figure-block">
+              {airthingsSketches ? (
+                <>
+                  <img
+                    src={airthingsSketches}
+                    alt="Free-hand sketches of app screens: lock screen, room air quality, an article, focus settings, a living room radon chart, mindfulness, and a summary."
+                  />
+                  <p className="craft-figure-caption">
+                    Figure 4. Free-hand sketches — exploring ideas and the
+                    current app before committing to high-fidelity design
+                  </p>
+                </>
+              ) : (
+                <div className="craft-visual-pending">
+                  Low-fi sketches go here (<code>sketches.png</code> in{" "}
+                  <code>app/assets/craft/airthings/</code>).
+                </div>
+              )}
+            </div>
+            <p>
+              Quick hand sketches to explore layouts and ideas cheaply
+              before committing to high-fidelity design.
+            </p>
+
+            <div className="craft-section-divider" />
+
+            <h3>How I'd run this as a project</h3>
+            <div className="craft-figure-block">
+              {airthingsProcess ? (
+                <>
+                  <img
+                    src={airthingsProcess}
+                    alt="Design process flow: from business requirement and user research, through iterations, low-fi and high-fi design, collaboration, testing, release, and post-release follow-up, looping back into the next iteration."
+                  />
+                  <p className="craft-figure-caption">
+                    Figure 5. The design process as a repeatable loop
+                  </p>
+                </>
+              ) : (
+                <div className="craft-visual-pending">
+                  Design process flow goes here (<code>process.png</code> in{" "}
+                  <code>app/assets/craft/airthings/</code>).
+                </div>
+              )}
+            </div>
+            <p>
+              I framed the work as a repeatable loop — from business
+              requirement and user research, through iteration, low- and
+              high-fidelity design, collaboration, testing and post-release
+              follow-up. The redesign is a continuous process, not a
+              one-off.
+            </p>
+
+            <div className="craft-section-divider" />
+
+            <p className="craft-note">
+              What I'd validate before going further: some ideas —
+              gamification, badges, community testimonials — could deepen
+              engagement, but they may not suit every Airthings user. I
+              flagged these as hypotheses to test with real users, not
+              assumptions to build on. Knowing what not to ship yet is part
+              of the job.
             </p>
           </div>
         </details>
