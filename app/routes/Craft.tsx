@@ -139,11 +139,11 @@ function Craft() {
         >
           <summary className="craft-case-summary">
             <span className="craft-case-title">
-              Design Systems — from component libraries to agentic workflows
+              Design Systems — from one designer's system to an agentic one
             </span>
             <span className="craft-case-meta">
               <span className="craft-role">
-                Head of Design, Element Logic · 2024–present
+                Design Systems Lead · Element Logic · 2024–ongoing
               </span>
               <span className="craft-focus">
                 Design systems strategy, component architecture, AI-assisted
@@ -156,34 +156,35 @@ function Craft() {
             <div className="craft-results">
               <span className="craft-results-label">Results</span>
               <p>
-                Unified two divergent component libraries into one shared
-                standard, cut new-component build time significantly, and
-                freed up design time previously spent maintaining the
-                system for research.
+                Cut weekly time spent reconciling components from ~5–7
+                hours to near zero, unified two divergent component
+                libraries into one, and shifted engineers from building
+                components from scratch to reusing them.
               </p>
             </div>
 
-            <p className="craft-note">
-              A note on this case study: company names and visuals are
-              withheld due to NDA — happy to speak to specifics in
-              conversation.
+            <h3>At a glance</h3>
+            <p>
+              Three years of the same design system evolving with the team
+              and the technology around it: built alone from scratch in
+              2024, scaled into a shared practice as more designers joined,
+              used to harmonize two diverging front-end libraries, and now
+              being extended to work for AI agents as well as people.
             </p>
+
+            <div className="craft-section-divider" />
 
             <h3>The challenge</h3>
             <p>
-              This spans design systems work across B2B logistics,
-              smarthome/IoT, fintech, and internal admin platforms, in
-              teams ranging from 5 people to several hundred — done both
-              the traditional way (component libraries, tokens,
-              documentation) and the agentic way, where AI agents
-              themselves work within the system's rules. The clearest
-              example: two product teams had grown their own component
-              libraries in parallel — one in MudBlazor, one in React — and
-              the gap between them kept widening. Every new feature meant
-              engineers rebuilding components that already existed
-              elsewhere, just slightly differently. Nothing was technically
-              broken, but nothing matched either, and the inconsistency was
-              quietly costing everyone time.
+              When I joined Element Logic in 2024, there was no design
+              system — every screen was built from scratch, and two
+              engineering stacks, MudBlazor and React, were already
+              quietly drifting apart with nothing shared to pull them back
+              together. Warehouse management software doesn't leave much
+              room for ambiguity: dense data, many user roles, workflows
+              that have to hold up under real operational pressure.
+              Whatever I built would need to carry that weight alone,
+              before there was anyone else to help maintain it.
             </p>
 
             <div className="craft-section-divider" />
@@ -191,41 +192,43 @@ function Craft() {
             <h3>My approach</h3>
             <ol className="craft-approach">
               <li>
-                <strong>Audited both libraries side by side.</strong> Found
-                where they'd diverged and why — technical constraint,
-                design drift, or just nobody noticing.
+                <strong>
+                  Built the design system from the ground up, solo —
+                  tokens, components, documentation —
+                </strong>{" "}
+                establishing one source of truth before there was anyone
+                else around to diverge from it.
               </li>
               <li>
                 <strong>
-                  Set a shared standard both stacks could implement
-                  against,
+                  As more UX designers joined the team, turned a personal
+                  system into a shared practice:
                 </strong>{" "}
-                rather than forcing one team onto the other's system.
-              </li>
-              <li>
-                <strong>Worked directly with engineering throughout.</strong>{" "}
-                Not a handoff, but an ongoing loop of aligning on what was
-                buildable and adjusting the design when it wasn't.
+                how the team would contribute to and govern it together,
+                not just work around it individually.
               </li>
               <li>
                 <strong>
-                  Introduced AI into the documentation and
-                  component-generation workflow,
+                  Worked closely with engineering to reconcile the
+                  MudBlazor and React libraries
                 </strong>{" "}
-                within clear guardrails, to keep the two libraries in sync
-                as they scaled.
+                into a single shared standard, rather than forcing either
+                team onto the other's stack.
               </li>
               <li>
-                <strong>Prioritized adoption through conversation over mandate.</strong>{" "}
-                Sat with teams to understand what worked before asking them
-                to change anything.
+                <strong>Kept adoption collaborative rather than mandated</strong>{" "}
+                — an ongoing loop with engineers on what was realistically
+                buildable, adjusting the system rather than dictating to
+                it.
               </li>
               <li>
-                <strong>Took the same discipline further.</strong>{" "}
-                Currently building an agentic design system in Claude for a
-                warehouse management context, where AI agents — not just
-                designers and engineers — need to work within the system's
-                rules. Same principles, applied to a new kind of "user."
+                <strong>
+                  With the arrival of Claude Design and agentic tooling,
+                  began extending the same system into the agentic era:
+                </strong>{" "}
+                the system's rules now need to be legible to AI agents
+                generating and assembling components, not only to the
+                designers and engineers who built it.
               </li>
             </ol>
 
@@ -241,9 +244,10 @@ function Craft() {
                 <h3>The impact</h3>
                 <div className="craft-stats">
                   <div className="craft-stat">
-                    <span className="craft-stat-number">Scratch→Reuse</span>
+                    <span className="craft-stat-number">~5–7hrs/wk→~0</span>
                     <span className="craft-stat-label">
-                      component workflow for engineers
+                      time spent per week discussing &amp; reconciling
+                      components, individually and cross-team
                     </span>
                   </div>
                   <div className="craft-stat">
@@ -253,9 +257,9 @@ function Craft() {
                     </span>
                   </div>
                   <div className="craft-stat">
-                    <span className="craft-stat-number">Fewer errors</span>
+                    <span className="craft-stat-number">Scratch→Reuse</span>
                     <span className="craft-stat-label">
-                      in shipped interfaces
+                      component workflow for engineers
                     </span>
                   </div>
                 </div>
@@ -263,12 +267,10 @@ function Craft() {
               <div>
                 <h3>The outcome</h3>
                 <p>
-                  Engineers stopped rebuilding components from scratch and
-                  started assembling layouts from a shared system. Two
-                  previously divergent libraries became fully consistent,
-                  and the time freed up on the design side went straight
-                  back into research — understanding the people using the
-                  product, not maintaining the system behind it.
+                  What started as one person's system is now a team's
+                  shared discipline — and the same principle is now being
+                  applied one level further: building a design system that
+                  agents, not just people, can work within.
                 </p>
               </div>
             </div>
