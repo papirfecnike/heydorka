@@ -9,7 +9,7 @@ export default {
   ssr: false,
   prerender: [
     "/",
-    "/craft",
+    "/case-studies",
     "/publications",
     "/speaking",
     "/testimonials",

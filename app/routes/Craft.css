@@ -131,6 +131,35 @@ details[open] > .craft-case-summary .craft-case-title::before {
 }
 
 /* =========================================================
+   RESULTS SUMMARY (short callout near the top of each case study)
+========================================================= */
+
+.craft-results {
+  display: flex;
+  gap: var(--m);
+  align-items: baseline;
+  margin: var(--m) 0 var(--l);
+  padding: var(--m) var(--l);
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-s);
+}
+
+.craft-results-label {
+  flex: none;
+  font-size: var(--text-s);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.craft-results p {
+  margin: 0;
+  color: var(--text);
+}
+
+/* =========================================================
    NOTE / DISCLAIMER
 ========================================================= */
 
@@ -301,6 +330,11 @@ details[open] > .craft-case-summary .craft-case-title::before {
   .craft-figure-row {
     grid-template-columns: 1fr;
     gap: var(--l);
+  }
+
+  .craft-results {
+    flex-direction: column;
+    gap: var(--xs);
   }
 
   .craft-stats {

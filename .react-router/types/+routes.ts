@@ -14,7 +14,7 @@ type Pages = {
   "/": {
     params: {};
   };
-  "/craft": {
+  "/case-studies": {
     params: {};
   };
   "/speaking": {
@@ -42,7 +42,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/craft" | "/speaking" | "/publications" | "/publications/:id" | "/testimonials" | "/cv" | "/prototype";
+    page: "/" | "/case-studies" | "/speaking" | "/publications" | "/publications/:id" | "/testimonials" | "/cv" | "/prototype";
   };
   "routes/Home.tsx": {
     id: "routes/Home";
@@ -50,7 +50,7 @@ type RouteFiles = {
   };
   "routes/Craft.tsx": {
     id: "routes/Craft";
-    page: "/craft";
+    page: "/case-studies";
   };
   "routes/Speaking.tsx": {
     id: "routes/Speaking";
