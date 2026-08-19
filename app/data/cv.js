@@ -22,7 +22,7 @@ const cv = {
       badge: "Promoted",
       description: [
         "Lead a growing UX team at Element Logic — grew the team from 2 to 4 through 2 hires I made — embedding design into strategic planning and cross-functional collaboration with product, engineering, and other stakeholders.",
-        "Hire and mentor UX talent, building a skilled, diverse team and coaching for self-motivation and ownership within empowered product teams.",
+        "Mentor UX talent, building a skilled, diverse team and coaching for self-motivation and ownership within empowered product teams. I could help a medior designer to grow to the senior level and he's now facing a promotion, while a junior designer is on his way to become a very solid generalist.",
         "Establish AI-assisted design workflows — shared skills, guardrails, and agent workflows — so the team spends its time on user understanding and judgment calls rather than mechanical work.",
         "Shifted design critiques from surface polish toward whether a solution truly solves the user's problem, keeping design as the guardian of quality as AI adoption scales.",
       ],
