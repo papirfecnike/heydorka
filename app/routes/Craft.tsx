@@ -234,22 +234,17 @@ function Craft() {
                 <h3>The impact</h3>
                 <div className="craft-stats">
                   <div className="craft-stat">
-                    <span className="craft-stat-number">~5–7hrs/wk→~0</span>
+                    <span className="craft-stat-number">5 → 1 hr</span>
                     <span className="craft-stat-label">
                       time spent per week discussing &amp; reconciling
                       components, individually and cross-team
                     </span>
                   </div>
                   <div className="craft-stat">
-                    <span className="craft-stat-number">2→1</span>
+                    <span className="craft-stat-number">1 library</span>
                     <span className="craft-stat-label">
-                      component libraries unified (MudBlazor &amp; React)
-                    </span>
-                  </div>
-                  <div className="craft-stat">
-                    <span className="craft-stat-number">Scratch→Reuse</span>
-                    <span className="craft-stat-label">
-                      component workflow for engineers
+                      Solid basis for a unified usage of React across the
+                      development teams
                     </span>
                   </div>
                 </div>
