@@ -10,6 +10,47 @@
 }
 
 /* =========================================================
+   INTRO / HEADLINE
+========================================================= */
+
+.cv-intro {
+  margin-top: var(--m);
+}
+
+.cv-intro p {
+  margin: 0;
+  font-size: var(--text-l);
+  line-height: 1.6;
+}
+
+/* =========================================================
+   TOP ACTIONS (download CV, LinkedIn, email)
+========================================================= */
+
+.cv-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--l);
+  margin-top: var(--m);
+}
+
+.cv-actions > a {
+  position: relative;
+}
+
+.cv-actions > a:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(-1 * var(--l) / 2);
+  transform: translate(50%, -50%);
+  width: 1px;
+  height: 1em;
+  background: var(--border);
+}
+
+/* =========================================================
    GRID
 ========================================================= */
 
@@ -74,8 +115,13 @@
   position: relative;
   margin-left: 1rem;
   font-weight: 600;
-  font-size: var(--text-m);
+  font-size: var(--nav);
   line-height: 1.4;
+}
+
+.cv-case-badge {
+  margin-left: var(--s);
+  vertical-align: middle;
 }
 
 .cv-title::before {
@@ -154,6 +200,26 @@ details:not([open]) .cv-content {
   margin-bottom: 0;
 }
 
+.cv-bullets {
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+
+.cv-bullets li {
+  margin-bottom: var(--s);
+  color: var(--text-muted);
+}
+
+.cv-bullets li:last-child {
+  margin-bottom: 0;
+}
+
+.cv-case-link {
+  display: inline-block;
+  margin-top: var(--s);
+}
+
 /* =========================================================
    SKILLS
 ========================================================= */
@@ -169,6 +235,16 @@ details:not([open]) .cv-content {
 ========================================================= */
 
 @media (max-width: 800px) {
+  .cv-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s);
+  }
+
+  .cv-actions > a:not(:last-child)::before {
+    display: none;
+  }
+
   .cv-grid {
     grid-template-columns: 1fr;
     gap: var(--s);

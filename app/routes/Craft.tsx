@@ -153,16 +153,6 @@ function Craft() {
           </summary>
 
           <div className="accordion-content">
-            <div className="craft-results">
-              <span className="craft-results-label">Results</span>
-              <p>
-                Cut weekly time spent reconciling components from ~5–7
-                hours to near zero, unified two divergent component
-                libraries into one, and shifted engineers from building
-                components from scratch to reusing them.
-              </p>
-            </div>
-
             <h3>At a glance</h3>
             <p>
               Three years of the same design system evolving with the team

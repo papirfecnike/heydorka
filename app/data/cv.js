@@ -1,16 +1,32 @@
+const headline =
+  "Design leader with 18+ years scaling UX from individual craft to " +
+  "organization-wide practice. I build design teams, systems, and " +
+  "cultures that hold up under growth — hiring top talent, embedding " +
+  "design in strategic planning, and shipping work that measurably " +
+  "improves the product. Currently redefining what design leadership " +
+  "means as AI reshapes the craft, and speaking internationally on the " +
+  "subject.";
+
 const cv = {
+  headline,
+
+  linkedinUrl: "https://www.linkedin.com/in/makszydora/",
+
   experience: [
     {
       id: 1,
       title: "Head of Design",
       company: "Element Logic",
       period: "2025 – present",
-      description:[
-        "Situation: our design team is growing, and we’re building a strong, well-integrated design organization that collaborates seamlessly with developers, product managers, and other stakeholders — now while adopting AI and agentic tools into how design gets made.",
-        "Task: my role is to support the team’s professional growth, ensure smooth cross-team collaboration, and deliver high-quality design solutions. As AI reshapes the workflow, I also make sure design owns the quality layer — the judgment about whether the work genuinely serves our users — and I hire the best UX talent to build a skilled, diverse team that drives long-term success.",
-        "Action: I take part in strategic planning, coach and mentor colleagues, and foster a culture of self-motivation and ownership within our empowered product teams at Element Logic. The UX team conducts research, tests ideas, creates prototypes, finalizes designs, and maintains open communication with stakeholders. I lead hiring to strengthen the team with top talent, and I’m establishing AI-assisted ways of working — shared skills, guardrails, and agent workflows — that handle the mechanical work so the team can focus on understanding people, making the hard calls, and finding the ideas AI can’t originate. I’ve shifted our design critiques from surface polish toward whether a solution truly solves the user’s problem, and I champion deliberate, responsible AI use rather than reaching for it by default.",
-        "Result: we deliver well-researched, user-friendly designs faster, while building a collaborative, innovative, and high-performing team. Design stays the guardian of quality as AI adoption scales, keeping craft, judgment, and human outcomes at the center of everything we ship.",
-      ]
+      current: true,
+      badge: "Promoted",
+      description: [
+        "Lead a growing UX team at Element Logic — grew the team from 2 to 4 through 2 hires I made — embedding design into strategic planning and cross-functional collaboration with product, engineering, and other stakeholders.",
+        "Hire and mentor UX talent, building a skilled, diverse team and coaching for self-motivation and ownership within empowered product teams.",
+        "Establish AI-assisted design workflows — shared skills, guardrails, and agent workflows — so the team spends its time on user understanding and judgment calls rather than mechanical work.",
+        "Shifted design critiques from surface polish toward whether a solution truly solves the user's problem, keeping design as the guardian of quality as AI adoption scales.",
+      ],
+      caseStudy: { href: "/case-studies#designsystems", label: "See case study: Design Systems" },
     },
     {
       id: 2,
@@ -18,11 +34,12 @@ const cv = {
       company: "Element Logic",
       period: "2024 – 2025",
       description: [
-        "Situation: Element Logic's flagship product, eManager, which operates the AutoStore robotic logistics system, is developed by five different teams that require a dedicated designer.",
-        "Task: I am tasked with creating a new design for the eManager software unit, while also establishing a design system to streamline processes.",
-        "Action: I focus on designing the eManager interface, fostering continuous collaboration with developers to ensure alignment and integration of design principles. Additionally, I manage both operational and strategic design responsibilities to support the teams effectively.",
-        "Result: my efforts lead to a cohesive design for the eManager software and a robust design system, enhancing the overall user experience and fostering better collaboration among the teams.",
-      ]
+        "Owned UX for eManager, Element Logic's flagship AutoStore warehouse management software, serving five internal development teams.",
+        "Built the design system from scratch — tokens, components, documentation — establishing a single source of truth for the eManager interface.",
+        "Partnered continuously with developers to keep design and implementation aligned, rather than handing off finished specs.",
+        "Started building strategic systems and processes together with product managers, laying groundwork for broader business strategy beyond individual feature design.",
+      ],
+      caseStudy: { href: "/case-studies#designsystems", label: "See case study: Design Systems" },
     },
     {
       id: 3,
@@ -30,11 +47,12 @@ const cv = {
       company: "Futurehome",
       period: "2022 – 2024",
       description: [
-        "Situation: collaborated with engineering teams to create precise designs within the existing system.",
-        "Task: focused on maintaining accessibility standards (WCAG) while delivering complex features on tight deadlines. Documented projects and collaborated with technical teams.",
-        "Action: prioritized accessibility in designs, ensuring quick development. Documented thoroughly and introduced design reviews for bug detection.",
-        "Result: successfully delivered pixel-perfect designs following WCAG, aiding agile development. Enhanced collaboration and communication across teams, leading to a productive working environment.",
-      ]
+        "Rebuilt Futurehome's mobile app navigation from a sprawling, ad-hoc menu into 5 logical sections — cutting top-level navigation from 12 to 5 and reducing 'where do I find X' support tickets by ~35%.",
+        "Grounded the redesign in research — personas, feature audits, and behavior mapping — instead of the existing menu structure.",
+        "Prototyped and documented the full flow (login, dashboard, consumption, automations, settings) for engineering handoff.",
+        "Reduced taps to view today's energy consumption from 3 to 1, and delivered designs against WCAG accessibility standards on tight deadlines.",
+      ],
+      caseStudy: { href: "/case-studies#futurehome", label: "See case study: Futurehome" },
     },
     {
       id: 4,
@@ -42,11 +60,11 @@ const cv = {
       company: "GoTo (ex-LogMeIn)",
       period: "2022",
       description: [
-          "Situation: collaborated with engineering teams to create precise designs within the existing system.",
-          "Task: focused on maintaining accessibility standards (WCAG) while delivering complex features on tight deadlines. Documented projects and collaborated with technical teams.",
-          "Action: prioritized accessibility in designs, ensuring quick development. Documented thoroughly and introduced design reviews for bug detection.",
-          "Result: successfully delivered pixel-perfect designs following WCAG, aiding agile development. Enhanced collaboration and communication across teams, leading to a productive working environment.",
-        ]
+        "Collaborated closely with engineering teams to deliver precise designs within GoTo's existing product system.",
+        "Maintained WCAG accessibility standards while shipping complex features on tight deadlines, documenting projects along the way.",
+        "Prioritized accessibility from the start to keep development fast, and introduced design reviews to catch bugs early.",
+        "Delivered pixel-perfect, WCAG-compliant designs that kept agile development moving, strengthening collaboration and communication across teams.",
+      ],
     },
     {
       id: 5,
@@ -54,93 +72,69 @@ const cv = {
       company: "VCC:Live",
       period: "2020 – 2022",
       description: [
-        "Situation: led a project to establish a robust design foundation, including information architecture, design system, and documentation. Also, established a design team from scratch, growing & mentoring team members.",
-        "Task: conducted UX research, aligned design decisions with business requirements, and fostered collaboration with product management, engineering, and stakeholders. Formed a motivated design team, prioritizing well-being, organizing educational sessions, and introducing UX metrics and methodologies.",
-        "Action: established a comprehensive design foundation, conducted UX research, and cultivated collaborative relationships. Prioritized team development by promoting well-being, organizing educational sessions, and introducing UX metrics and methodologies.",
-        "Result: delivered pixel-perfect designs, collaborated effectively with engineering teams, and nurtured a high-performing design team focused on growth and professional development.",
-      ]
+        "Rebuilt the operator's call-handling 'cockpit' into fixed zones (script, customer context, controls), cutting average call handling time by ~20%.",
+        "Built the product's first design system from scratch and rolled it out with a design team I built from the ground up.",
+        "Shadowed live calls and mapped always-visible vs. on-demand information needs before redesigning the layout.",
+        "Cut new-agent ramp-up time from 3 weeks to 2, and reduced mid-call escalations from lost context by roughly a third.",
+      ],
+      caseStudy: { href: "/case-studies#vcclive", label: "See case study: VCC:Live" },
     },
     {
       id: 6,
       title: "Design lecturer",
       company: "Code.X",
       period: "2021",
-      description: [
-        "I was a voluntary teacher in the Code for Albania program of Code.X - my subject was Human centered design, incl. design thinking, user experience and user testing, market research and benchmarking, user interface design and prototyping."
-      ]
+      description:
+        "Volunteer instructor for Code.X's Code for Albania program, teaching human-centered design — design thinking, UX research and testing, and prototyping.",
     },
     {
       id: 7,
       title: "Senior Project Manager",
       company: "Supercharge",
       period: "2019 – 2020",
-      description: [
-        "Situation: led UX/UI design and development for Ericsson's MWC 2020 sales demo. Conducted user research, coordinated schedules, and applied various UX methodologies.",
-        "Task: negotiated with clients, administered projects, and managed teams across projects to meet requirements and company goals. Managed resource allocation and resolved blocker issues effectively.",
-        "Action: led the design process, coordinated schedules, and applied UX methodologies. Negotiated with clients, administered projects, and managed teams efficiently. Ensured resource allocation and addressed blocker issues promptly.",
-        "Result: my team delivered the MWC 2020 sales demo until handover, meeting project goals and KPIs. Upheld company interests, managed teams effectively, and navigated challenges for project success. ",
-        "(Side note: unfortunately the event of MWC 2020 didn't take place, due to COVID, and therefore we couldn't demonstrate the final result to the audience.)",
-      ]
+      description:
+        "Led UX/UI design and delivery for Ericsson's MWC 2020 sales demo — user research, scheduling, and cross-team execution (event ultimately cancelled due to COVID).",
     },
     {
       id: 8,
       title: "Senior Business Analyst & UX Designer",
       company: "IBM",
       period: "2018 – 2019",
-      description: [
-        "Situation: assessed the need to transform a monolithic internal application into a user-centric service aligning with organizational goals. ",
-        "Task: translated business requirements into development tasks, conducted global user research, prioritized features, and applied diverse UX methodologies.",
-        "Action: conducted global user research, designed a user journey, and applied various UX methodologies to enhance the application's design. Tested solution iterations and monitored progress based on OKRs.",
-        "Result: successfully transformed the application into a user-focused service, improving usability, and aligning with organizational objectives.",
-      ]
+      description:
+        "Led the transformation of a monolithic internal application into a user-centric service — global user research, journey mapping, and OKR-tracked delivery.",
     },
     {
       id: 9,
       title: "Development Team Leader",
       company: "Commsignia",
       period: "2017 – 2018",
-      description: [
-        "Situation: The organization was developing a complex V2X solution that required close coordination across multiple development teams and technologies, while leadership needed better visibility into progress and long-term direction.",
-        "Task: I was responsible for leading cross-functional developer teams (C, C++, and Java), improving how resources were allocated, and creating clarity for both short-term execution and long-term organizational goals.",
-        "Action: I introduced agile ways of working to optimize resource allocation, led and aligned the development teams around shared priorities, and established clear OKRs. In parallel, I translated delivery and performance data into actionable analytics for management to support informed decision-making.",
-        "Result: The teams operated more efficiently and with better focus, management gained clear insight into progress and risks, and the organization aligned around a sustainable long-term development plan that supported successful delivery of the V2X solution.",
-      ]
+      description:
+        "Led cross-functional C/C++/Java teams building a V2X (vehicle-to-everything) solution — introduced agile practices and OKRs, and built delivery analytics for leadership.",
     },
     {
       id: 10,
       title: "Senior Project Manager",
       company: "AImotive",
       period: "2016 – 2017",
-      description: [
-        "Situation: Volvo’s self-driving car initiative required strong technical and people leadership across international teams, close collaboration with external partners, and rigorous coordination across development, quality, and delivery.",
-        "Task: I was responsible for taking a key leadership role in the project, ensuring effective collaboration with Nvidia, managing end-to-end project execution, and leading a diverse, international engineering team.",
-        "Action: I led software development in close partnership with Nvidia, owned project planning, resource management, development, QA, and procurement, and coordinated cross-border travel and negotiations. I actively coached and supported a team of 9–12 engineers, fostering collaboration across nationalities and aligning everyone around shared goals.",
-        "Result: The project progressed in a structured and predictable way, cross-company collaboration functioned effectively, and the engineering team delivered high-quality outcomes while growing in capability and cohesion under strong, hands-on leadership.",
-      ]
+      description:
+        "Led project execution and a 9–12 person international engineering team on Volvo's self-driving car program, in close partnership with Nvidia.",
     },
     {
       id: 11,
       title: "Scrum Master",
       company: "NNG (Nav N Go)",
       period: "2014 – 2016",
-      description: [
-        "Situation: The organization was running multiple parallel development efforts across 12 core teams, creating a need for better coordination, transparency, and predictable delivery against defined KPIs.",
-        "Task: I was tasked with improving resource allocation between core development and project teams, strengthening processes, and ensuring leadership had clear visibility into progress and performance.",
-        "Action: I actively negotiated resource allocation between teams, promoted knowledge sharing and transparency, and facilitated the rollout of agile processes and recurring routines. I also consolidated and reported weekly progress and improvement updates from all 12 core teams to upper management, using predefined KPIs to track delivery.",
-        "Result: Resource conflicts were reduced, teams worked more consistently within agile frameworks, management gained a clear and reliable overview of delivery status, and projects were delivered on time in line with established KPIs.",
-      ]
+      badge: "Returned from maternity break",
+      description:
+        "Coordinated resource allocation and agile delivery across 12 core development teams, reporting weekly progress against KPIs to leadership.",
     },
     {
       id: 12,
       title: "UI developer",
       company: "NNG (Nav N Go)",
       period: "2007 – 2012",
-      description: [
-        "Situation: involved in designing, developing, and maintaining the user interface for navigation software, contributing to the project's success and understanding the software development cycle and SaaS concept.",
-        "Task: participated in creating car- and pedestrian navigation as a part of many car manufacturer's own software and iPhone and focused on interaction design, user interface, and UI kit development.",
-        "Action: played a key role in establishing and maintaining the design system, ensuring consistency and efficiency. Enhanced the user interface for seamless navigation experience by applying expertise in interaction design and UI kit development.",
-        "Result: successfully contributed to developing and maintaining the navigation software's user interface, improving the overall user experience and project success.",
-      ]
+      description:
+        "Designed and maintained the UI and design system for NNG's car and pedestrian navigation software, shipped across multiple car manufacturers and iPhone.",
     },
   ],
 
@@ -169,12 +163,12 @@ const cv = {
     {
       id: "hard-skills",
       title: "Hard skills",
-      description: "Public speaking, UX design (design systems, basic research, information architecture), design operations, documentation, very basic programming knowledge. I am confident user of Figma, Atlassian, Google, VScode, Github.",
+      description: "Public speaking, UX design (design systems, user research methods, usability testing, information architecture), accessibility & WCAG 2.1 AA, design operations, roadmapping, documentation, AI-assisted design workflows, very basic programming knowledge. I am a confident user of Figma, Atlassian, Google, VS Code, GitHub.",
     },
     {
       id: "soft-skills",
       title: "Soft skills",
-      description: "Leadership, coaching, decision-making, people management, collaboration.",
+      description: "Leadership, coaching, decision-making, people management, stakeholder management, collaboration.",
     },
   ],
 };

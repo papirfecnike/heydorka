@@ -145,7 +145,6 @@ nav {
   top: 0;
   z-index: 1000;
 
-  height: 3.5rem;
   min-height: 5rem;
 
   display: flex;
@@ -262,10 +261,12 @@ nav {
 
 /* Switch to the hamburger menu earlier than the general mobile
    breakpoint below: with 7 nav items (including "Scalable test
-   suite") plus the theme toggle, the row runs out of room and wraps
-   awkwardly well before 800px. Everything here mirrors the hamburger
-   rules in the main mobile block further down. */
-@media (max-width: 1100px) {
+   suite") plus the theme toggle, the row runs out of room well before
+   800px. 1200px (rather than the previous 1100px) leaves enough
+   buffer that the menu and the theme switch stop colliding in that
+   in-between range. This is the only place these rules are defined —
+   the responsive block further down no longer redeclares them. */
+@media (max-width: 1200px) {
   #menuToggle {
     display: block;
     background: none;
@@ -936,52 +937,4 @@ footer {
   .testimonial {
     padding: var(--m) var(--l);
   }
-
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-
-  /* hamburger */
-  #menuToggle {
-    display: block;
-    background: none;
-    color: var(--font);
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 1002;
-  }
-
-  /* mobile drawer */
-  .mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 75%;
-    max-width: 280px;
-    background: var(--bg-menu);
-    border-right: 1px solid var(--border);
-    box-shadow: var(--shadow);
-
-    transform: translateX(-100%);
-    transition: transform var(--slow);
-
-    padding: calc(8rem + var(--s)) var(--s) var(--s);
-    z-index: 1001;
-  }
-
-  nav.open .mobile-menu {
-    transform: translateX(0);
-  }
-
-  /* menu items vertical */
-  #menuList {
-    display: flex;
-    flex-direction: column;
-    gap: var(--l);
-  }
-
 }
