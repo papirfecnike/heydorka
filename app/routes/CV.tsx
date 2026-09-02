@@ -51,7 +51,7 @@ function CV() {
 
           <div className="cv-column cv-column-side">
             <CVSection title="Education" items={cv.education} />
-            <CVSection title="Skills" items={cv.skills} />
+            <CVSection title="Skills" items={cv.skills} isSkills />
           </div>
         </section>
       </section>

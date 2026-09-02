@@ -6,11 +6,20 @@ function CVSection({ title, items, isSkills = false }) {
       <h3>{title}</h3>
 
       {isSkills ? (
-        <ul className="cv-skills">
-          {items.map((item) => (
-            <li key={item.id}>{item.description}</li>
+        <div className="cv-skill-groups">
+          {items.map((group) => (
+            <div className="cv-skill-group" key={group.id}>
+              <h4 className="cv-skill-group-title">{group.title}</h4>
+              <ul className="cv-skill-chips">
+                {group.items.map((skill) => (
+                  <li key={skill} className="cv-skill-chip">
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         items.map((item) => (
           <details
@@ -46,6 +55,16 @@ function CVSection({ title, items, isSkills = false }) {
                       {item.period}
                     </span>
                   )}
+                </span>
+              )}
+
+              {item.tags && (
+                <span className="cv-tags">
+                  {item.tags.map((tag) => (
+                    <span className="cv-tag" key={tag}>
+                      {tag}
+                    </span>
+                  ))}
                 </span>
               )}
             </summary>

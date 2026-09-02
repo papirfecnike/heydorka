@@ -88,8 +88,14 @@
 
 .cv-page h3 {
   margin-bottom: var(--m);
-  font-size: var(--h3);
+  padding-bottom: var(--xs);
+  font-size: var(--small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
 }
 
 /* =========================================================
@@ -151,6 +157,29 @@ details[open] .cv-title::before {
 
 .cv-company {
   font-variant: small-caps;
+}
+
+/* =========================================================
+   ALWAYS-VISIBLE TAGS (earlier career keyword scanning)
+========================================================= */
+
+.cv-tags {
+  display: block;
+  margin-left: 1rem;
+  margin-top: 2px;
+  font-size: var(--text-s);
+  color: var(--text-muted);
+  opacity: 0.65;
+}
+
+.cv-tag {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+}
+
+.cv-tag:not(:last-child)::after {
+  content: " · ";
 }
 
 /* =========================================================
@@ -224,10 +253,36 @@ details:not([open]) .cv-content {
    SKILLS
 ========================================================= */
 
-.cv-skills {
+.cv-skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m);
+}
+
+.cv-skill-group-title {
+  margin: 0 0 var(--s);
+  font-size: var(--text-s);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cv-skill-chips {
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s);
   padding: 0;
   margin: 0;
+}
+
+.cv-skill-chip {
+  font-size: var(--text-s);
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--text);
 }
 
 /* =========================================================
