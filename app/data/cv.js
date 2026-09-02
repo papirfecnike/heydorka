@@ -89,8 +89,11 @@ const cv = {
       company: "Code.X",
       period: "2021",
       tags: ["Design Thinking", "UX Research", "Teaching"],
-      description:
-        "Volunteer instructor for Code.X's Code for Albania program, teaching human-centered design — design thinking, UX research and testing, and prototyping.",
+      description: [
+        "Volunteered as instructor for Code.X's Code for Albania program, teaching human-centered design to aspiring designers.",
+        "Delivered hands-on training in design thinking, UX research, and usability testing methods.",
+        "Guided students through prototyping exercises, turning research insights into testable design solutions.",
+      ],
     },
     {
       id: 7,
@@ -98,8 +101,11 @@ const cv = {
       company: "Supercharge",
       period: "2019 – 2020",
       tags: ["UX/UI Design", "User Research", "Cross-functional Delivery"],
-      description:
-        "Led UX/UI design and delivery for Ericsson's MWC 2020 sales demo — user research, scheduling, and cross-team execution (event ultimately cancelled due to COVID).",
+      description: [
+        "Led UX/UI design and delivery for Ericsson's MWC 2020 sales demo, owning the project from concept through execution.",
+        "Conducted user research to shape the demo experience and coordinated scheduling across cross-functional teams.",
+        "Managed cross-team execution against a fixed deadline (the event was ultimately cancelled due to COVID).",
+      ],
     },
     {
       id: 8,
@@ -107,8 +113,11 @@ const cv = {
       company: "IBM",
       period: "2018 – 2019",
       tags: ["UX Research", "Journey Mapping", "OKRs"],
-      description:
-        "Led the transformation of a monolithic internal application into a user-centric service — global user research, journey mapping, and OKR-tracked delivery.",
+      description: [
+        "Led the transformation of a monolithic internal application into a user-centric service for a global user base.",
+        "Ran global user research and journey mapping to identify pain points and prioritize redesign work.",
+        "Tracked delivery against OKRs, aligning design decisions with measurable business goals.",
+      ],
     },
     {
       id: 9,
@@ -116,8 +125,11 @@ const cv = {
       company: "Commsignia",
       period: "2017 – 2018",
       tags: ["Agile Leadership", "OKRs", "Delivery Analytics"],
-      description:
-        "Led cross-functional C/C++/Java teams building a V2X (vehicle-to-everything) solution — introduced agile practices and OKRs, and built delivery analytics for leadership.",
+      description: [
+        "Led cross-functional C/C++/Java teams building a V2X (vehicle-to-everything) solution.",
+        "Introduced agile practices and OKRs, improving delivery predictability across teams.",
+        "Built delivery analytics and reporting for leadership to track progress and surface risks early.",
+      ],
     },
     {
       id: 10,
@@ -125,8 +137,10 @@ const cv = {
       company: "AImotive",
       period: "2016 – 2017",
       tags: ["Program Management", "Cross-functional Leadership"],
-      description:
-        "Led project execution and a 9–12 person international engineering team on Volvo's self-driving car program, in close partnership with Nvidia.",
+      description: [
+        "Led project execution and a 9–12 person international engineering team on Volvo's self-driving car program.",
+        "Partnered closely with Nvidia to align technical milestones and cross-team delivery.",
+      ],
     },
     {
       id: 11,
@@ -134,9 +148,12 @@ const cv = {
       company: "NNG (Nav N Go)",
       period: "2014 – 2016",
       badge: "Returned from maternity break",
-      tags: ["Agile Delivery", "Stakeholder Reporting"],
-      description:
-        "Coordinated resource allocation and agile delivery across 12 core development teams, reporting weekly progress against KPIs to leadership.",
+      tags: ["Agile Delivery", "Process Improvement", "Stakeholder Reporting"],
+      description: [
+        "Drove resource allocation and process improvements across 12 core development teams, negotiating priorities between development and project teams.",
+        "Facilitated the rollout of agile processes and routines, promoting knowledge sharing and transparency across teams.",
+        "Reported weekly progress and improvements to upper management, adhering to preset KPIs to keep delivery on track.",
+      ],
     },
     {
       id: 12,
@@ -144,8 +161,11 @@ const cv = {
       company: "NNG (Nav N Go)",
       period: "2007 – 2012",
       tags: ["UI Design", "Design Systems", "Cross-platform Delivery"],
-      description:
-        "Designed and maintained the UI and design system for NNG's car and pedestrian navigation software, shipped across multiple car manufacturers and iPhone.",
+      description: [
+        "Designed and maintained the UI and design system for NNG's car and pedestrian navigation software.",
+        "Ensured design consistency across releases shipped for multiple car manufacturers and iPhone.",
+        "Collaborated with engineering to implement UI components within platform constraints.",
+      ],
     },
   ],
 
