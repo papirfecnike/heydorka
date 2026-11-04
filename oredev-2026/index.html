@@ -1,0 +1,1243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ØREDEV: No researchers were harmed in the making of this test suite</title>
+<meta name="description" content="Dora Makszy, Øredev 2026. Building an async UX test suite with AI: the 2025 version, and how Claude changes it one year later.">
+<style>
+/* Layout: a 1920×1080 stage. The root size scales with the screen, so a slide keeps its composition on a laptop and on a projector.
+   Every slide = header (eyebrow, title, lead) pinned top-left + a body that fills the rest of the screen. */
+:root{
+  --ink:#111827; --muted:#475063; --dim:#B0B7C3; --line:#D1D5DD;
+  --bg:#FFFFFF; --alt:#EFF0F4; --alt2:#E5E8EE; --card:#FFFFFF;
+  --primary:#6D28D9; --primary-ink:#FFFFFF; --primary-soft:#EDE6FD; --primary-mid:#B29CF4; --primary-tint:#FAF7FF;
+  --red:#C81E1E; --red-soft:#FDECEC; --red-line:#EFA0A0;
+  --green:#15803D; --green-soft:#E8F6ED; --green-line:#7ACF98;
+  --amber:#8A5300; --amber-soft:#FCF1DA; --amber-line:#EBCB8B;
+  --c-r:#E0362F; --c-o:#EE7A0C; --c-y:#C99A05; --c-g:#279749; --c-b:#2C68E0;
+  --shadow:0 1px 2px rgba(17,24,39,.14), 0 6px 20px rgba(17,24,39,.16);
+  --shadow-lg:0 2px 4px rgba(17,24,39,.14), 0 18px 44px rgba(17,24,39,.22);
+  --sans:ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif:Georgia, "Times New Roman", serif;
+  --mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+*{box-sizing:border-box}
+html{font-size:max(14px, min(1.04vw, 1.85vh));scroll-snap-type:y mandatory;scroll-behavior:smooth;background:var(--bg)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:1rem;line-height:1.4;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-weight:400;margin:0;letter-spacing:-.02em}
+p{margin:0}
+a{color:var(--primary)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:.15rem solid var(--primary);outline-offset:.15rem}
+
+/* ---------- stage ---------- */
+.slide{height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;
+  padding-block:3.3rem 2.6rem;padding-left:max(4.5rem,env(safe-area-inset-left,0px));padding-right:max(5.5rem,env(safe-area-inset-right,0px))}
+.slide.alt{background:var(--alt)}
+.inner{height:100%;max-width:88rem;margin:0 auto;display:flex;flex-direction:column;gap:2rem}
+.body{flex:1;min-height:0;display:grid;align-content:center;gap:1.4rem}
+.body.top{align-content:start}
+.body.fill{align-content:stretch}
+
+/* ---------- header ---------- */
+.head{display:grid;gap:.5rem;flex:0 0 auto}
+.head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:1.5rem}
+.head-row > .head{flex:1;min-width:0}
+.head-row > .btns{margin-top:1.9rem;flex:0 0 auto}
+.eyebrow{font-size:1rem;line-height:1.2;text-transform:uppercase;letter-spacing:.12em;color:var(--primary);font-weight:600}
+.title{font-size:4rem;line-height:1.05}
+.lead{font-size:1.55rem;color:var(--muted)}
+.btns{display:flex;gap:.75rem}
+.btn{display:inline-flex;align-items:center;gap:.55rem;padding:.8rem 1.4rem;border-radius:.65rem;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:1.05rem;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:box-shadow .2s, transform .2s;white-space:nowrap}
+.btn:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+.btn svg{width:1.05rem;height:1.05rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.18rem .55rem;border-radius:999px;background:var(--primary-soft);color:var(--primary);vertical-align:middle}
+.note{font-size:1.05rem;color:var(--muted)}
+
+/* ---------- step reveal ---------- */
+.step{color:var(--dim);transition:color .45s ease, opacity .45s ease, border-color .45s;cursor:pointer}
+.step .ico{color:var(--dim);transition:color .45s}
+.step.on{color:var(--ink)}
+.step.on .ico{color:var(--primary)}
+.big-list{list-style:none;margin:0;padding:0;display:grid;gap:1.3rem}
+.big-list li{display:flex;gap:1.1rem;align-items:flex-start;font-size:2.35rem;line-height:1.2}
+.big-list .ico{flex:0 0 auto;width:.9em;height:.9em;margin-top:.15em}
+.big-list.sm{gap:1rem}
+.big-list.sm li{font-size:2.05rem}
+.big-list.xl{gap:2rem} .big-list.xl li{font-size:3.1rem}
+.num-list.xl{gap:2.4rem} .num-list.xl li{font-size:3.5rem}
+.big-list.xxl{gap:2.6rem} .big-list.xxl li{font-size:3.7rem}
+.big-list.md{gap:1.15rem} .big-list.md li{font-size:2.35rem}
+
+/* ---------- rail ---------- */
+.rail{position:fixed;right:max(1.3rem,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);display:grid;gap:.38rem;z-index:30}
+.rail button{width:.5rem;height:.5rem;border-radius:50%;border:0;background:#C0C5CF;padding:0;cursor:pointer;position:relative;transition:transform .2s, background .2s}
+.rail button[aria-current="true"]{background:var(--primary);transform:scale(1.45)}
+.rail button span{position:absolute;right:1.1rem;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:.75rem;background:var(--ink);color:#fff;padding:.15rem .5rem;border-radius:.3rem;opacity:0;pointer-events:none;transition:opacity .15s}
+.rail button:hover span,.rail button:focus-visible span{opacity:1}
+.rail .sep{height:.4rem}
+.progress{position:fixed;left:0;top:0;height:.22rem;background:var(--primary);z-index:40;width:0;transition:width .3s}
+
+/* ---------- hero ---------- */
+.hero{align-items:center;justify-content:center;text-align:center;gap:2.8rem}
+.hero .eyebrow{font-size:1.1rem}
+.hero h1{font-size:5rem;line-height:1.08;max-width:20ch;text-wrap:balance}
+.speaker{display:inline-flex;align-items:center;gap:1.5rem;padding:1rem 1.5rem;background:var(--alt2);border-radius:1.1rem;text-decoration:none;color:inherit}
+.speaker img.me{width:5rem;height:5rem;border-radius:50%;object-fit:cover}
+.speaker img.logo{height:3.4rem;width:auto}
+.speaker .who{display:grid;text-align:left}
+.speaker .who b{font-weight:400;font-size:1.6rem}
+.speaker .who span{color:var(--muted);font-size:1.05rem}
+.hint{color:var(--muted);font-size:.95rem}
+kbd{font-family:var(--mono);font-size:.8em;border:1px solid var(--line);border-bottom-width:2px;border-radius:.3rem;padding:.05rem .35rem;background:var(--card)}
+
+/* ---------- contents ---------- */
+.toc{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:1.2rem 2rem}
+.toc a{display:flex;gap:1.2rem;align-items:center;font-size:2.5rem;color:var(--ink);text-decoration:none;background:var(--card);border-radius:1.1rem;padding:2.2rem 2.2rem;box-shadow:var(--shadow);border:1px solid var(--line)}
+.toc a:hover{color:var(--primary);border-color:var(--primary-mid)}
+.toc svg{width:2.8rem;height:2.8rem;color:var(--primary);flex:0 0 auto}
+.toc .new a{background:var(--primary-tint);border-color:var(--primary-mid)}
+
+/* ---------- diamond ---------- */
+.figure{background:var(--card);border-radius:1.1rem;box-shadow:var(--shadow-lg);padding:1rem;justify-self:center;align-self:center;max-width:100%;line-height:0}
+.figure img{display:block;border-radius:.5rem;width:auto;height:auto;max-width:100%;max-height:calc(100vh - 22rem)}
+.credit{font-size:.95rem;color:var(--muted);text-align:center}
+
+/* ---------- theory ---------- */
+.flowcard{border-radius:1.4rem;padding:2.2rem 2.6rem;border:2px solid;cursor:pointer;display:grid;gap:2.2rem;transition:background .3s;box-shadow:var(--shadow-lg)}
+.flowcard.bad{background:var(--red-soft);border-color:var(--red-line)}
+.flowcard.good{background:var(--green-soft);border-color:var(--green-line)}
+.flowcard h3{font-size:2.6rem;display:flex;gap:.9rem;align-items:center}
+.flowcard h3 svg{width:2.6rem;height:2.6rem;flex:0 0 auto}
+.flow{display:flex;align-items:flex-start;gap:.6rem}
+.flow .node{display:grid;justify-items:center;gap:.6rem;font-size:1.45rem;flex:0 0 auto;min-width:7.5rem;text-align:center}
+.flow .node svg{width:3.6rem;height:3.6rem}
+.flow .line{flex:1 1 1rem;min-width:1rem;border-top:3px dashed currentColor;opacity:.4;margin-top:1.8rem}
+.bad .flow{color:var(--red)} .good .flow{color:var(--green)}
+.flow .node div{color:var(--ink)}
+.flow-note{font-size:1.8rem;color:var(--red);font-weight:500}
+.benefits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem}
+.benefits div{background:var(--card);border-radius:1rem;padding:1.2rem 1.3rem;display:grid;grid-template-columns:auto 1fr;column-gap:.8rem;row-gap:.2rem;align-items:center;box-shadow:var(--shadow)}
+.benefits svg{width:2rem;height:2rem;color:var(--green);grid-row:span 2}
+.benefits b{font-weight:600;font-size:1.3rem}
+.benefits span{color:var(--muted);font-size:1.05rem}
+.toggle-hint{font-size:1rem;color:var(--muted)}
+
+/* ---------- methods ---------- */
+.tabs{display:flex;gap:.6rem;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:.7rem 1.4rem;cursor:pointer;font-size:1.2rem;box-shadow:0 1px 3px rgba(17,24,39,.12)}
+.tabs button[aria-selected="true"]{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.method{position:relative;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:2.4rem;background:var(--card);border-radius:1.4rem;padding:2rem 2.2rem;box-shadow:var(--shadow-lg);height:100%;min-height:0}
+.method .left{display:grid;grid-template-rows:auto 1fr;gap:1.1rem;min-height:0}
+.method h3{font-size:2.2rem}
+.method .sub{color:var(--muted);font-size:1.35rem}
+.meta{display:grid;gap:1.4rem;align-content:start}
+.meta small{display:block;font-size:.85rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:.25rem;font-weight:600}
+.meta p{font-size:1.7rem}
+.counter{position:absolute;right:2.2rem;bottom:2rem;text-align:right;display:grid;gap:.2rem;justify-items:end}
+.counter b{font-size:5.2rem;line-height:1;font-weight:600;color:var(--primary);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.counter span{font-size:1.25rem;color:var(--muted)}
+.counter.bump b{animation:bump .35s ease}
+@keyframes bump{40%{transform:scale(1.12)}}
+@media (prefers-reduced-motion:reduce){.counter.bump b{animation:none}}
+.reset{position:absolute;right:2.2rem;top:2rem}
+.play{background:var(--alt2);border-radius:1rem;padding:1.3rem;display:grid;gap:1rem;align-content:start;position:relative;user-select:none;min-height:0}
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.ab button{border:2px solid var(--line);background:var(--card);border-radius:.9rem;padding:1.2rem;cursor:pointer;text-align:left;display:grid;gap:.35rem;font-size:1.25rem}
+.ab button[aria-pressed="true"]{border-color:var(--primary);background:var(--primary-soft)}
+.ab .a-vis{height:9rem;border-radius:.5rem;background:repeating-linear-gradient(#D5D9E0 0 2px,#fff 2px .9rem)}
+.ab .b-vis{height:9rem;border-radius:.5rem;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.ab .b-vis i{background:#E0D6FC;border-radius:.5rem}
+.meter{height:.75rem;border-radius:999px;background:#D5D9E0;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--primary);transition:width .3s}
+.ptask{font-size:1.2rem;color:var(--muted)}
+.fc-area{background:var(--card);border-radius:.8rem;height:17rem;position:relative;overflow:hidden;cursor:crosshair;box-shadow:var(--shadow)}
+.fc-area .bar{display:flex;gap:2rem;padding:1rem 1.4rem;border-bottom:1px solid var(--line);font-size:1.2rem;color:var(--muted)}
+.fc-area .ghost{margin:1.2rem 1.4rem;height:.8rem;background:var(--alt2);border-radius:.4rem}
+.fc-dot{position:absolute;width:1.4rem;height:1.4rem;margin:-.7rem 0 0 -.7rem;border-radius:50%;background:var(--primary);box-shadow:0 0 0 .5rem rgba(109,40,217,.22);pointer-events:none}
+.fc-dot.miss{background:var(--red);box-shadow:0 0 0 .5rem rgba(200,30,30,.2)}
+.cs{display:grid;gap:1rem}
+.cs-cards{display:flex;gap:.6rem;flex-wrap:wrap;min-height:3rem}
+.cs-card{background:var(--card);border:1px solid var(--line);border-radius:.6rem;padding:.5rem 1rem;cursor:grab;font-size:1.2rem;box-shadow:0 1px 3px rgba(17,24,39,.14)}
+.cs-card[aria-pressed="true"]{border-color:var(--primary);background:var(--primary-soft)}
+.cs-groups{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cs-group{border:2px dashed #B6BCC7;border-radius:.9rem;padding:.8rem;min-height:9rem;display:flex;flex-wrap:wrap;align-content:flex-start;gap:.5rem;cursor:pointer;background:var(--card)}
+.cs-group b{font-weight:600;font-size:1.15rem;width:100%}
+.cs-group .empty{color:var(--muted);font-size:1.05rem}
+.cs-group.over{border-color:var(--primary);background:var(--primary-soft)}
+.mc-area{background:var(--card);border-radius:.8rem;height:16rem;display:flex;align-items:flex-end;justify-content:flex-end;gap:.8rem;padding:1.3rem;position:relative;box-shadow:var(--shadow)}
+.mc-area .txt{position:absolute;left:1.3rem;top:1.3rem;right:1.3rem;display:grid;gap:.7rem}
+.mc-area .txt i{height:.8rem;background:var(--alt2);border-radius:.4rem}
+.mc-area button{padding:.8rem 1.6rem;border-radius:.6rem;border:0;cursor:pointer;font-weight:700;letter-spacing:.04em;font-size:1.15rem}
+.mc-del{background:#FBD5D5;color:var(--red)} .mc-save{background:var(--primary);color:#fff}
+.cc-trigger{background:var(--card);border:1px solid var(--line);border-radius:.6rem;padding:.8rem 1.2rem;cursor:pointer;display:inline-flex;gap:.8rem;font-size:1.25rem;box-shadow:0 1px 3px rgba(17,24,39,.14)}
+.cc-menu{margin-top:.5rem;background:var(--card);border:1px solid var(--line);border-radius:.6rem;padding:.5rem;display:grid;width:17rem;box-shadow:var(--shadow)}
+.cc-menu button{border:0;background:none;text-align:left;padding:.6rem .8rem;border-radius:.4rem;cursor:pointer;font-size:1.2rem}
+.cc-menu button:hover{background:var(--alt2)}
+
+/* ---------- plan ---------- */
+.plan{display:grid;gap:1rem}
+.plan-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:1.2rem;background:var(--card);border-radius:1rem;padding:1.15rem 1.6rem;box-shadow:var(--shadow);border:1px solid var(--line)}
+.plan-row small{display:block;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:.2rem;font-weight:600}
+.plan-row .m small{color:inherit;opacity:.75}
+.plan-row span{font-size:1.6rem}
+.plan-row.step.on{border-color:var(--primary-mid)}
+
+/* ---------- CRAFT ---------- */
+.craft{display:grid;gap:1rem}
+.craft .c{display:flex;gap:1.4rem;align-items:center;border:1px solid var(--line);border-left:.5rem solid;border-radius:.9rem;padding:1.05rem 1.6rem;background:var(--card);font-size:1.6rem;box-shadow:var(--shadow)}
+.craft .c b{font-family:var(--serif);font-size:3rem;font-weight:700;line-height:1;width:2.6rem;flex:0 0 auto}
+.craft .c em{font-style:normal;font-weight:600}
+.craft .c:nth-child(1){border-left-color:var(--c-r)} .craft .c:nth-child(1) b{color:var(--c-r)}
+.craft .c:nth-child(2){border-left-color:var(--c-o)} .craft .c:nth-child(2) b{color:var(--c-o)}
+.craft .c:nth-child(3){border-left-color:var(--c-y)} .craft .c:nth-child(3) b{color:var(--c-y)}
+.craft .c:nth-child(4){border-left-color:var(--c-g)} .craft .c:nth-child(4) b{color:var(--c-g)}
+.craft .c:nth-child(5){border-left-color:var(--c-b)} .craft .c:nth-child(5) b{color:var(--c-b)}
+
+/* ---------- embedded pages ---------- */
+.frame{--zoom:1.25;border:1px solid var(--line);border-radius:1.1rem;overflow:hidden;box-shadow:var(--shadow-lg);background:var(--card);height:100%;min-height:0;width:100%}
+.frame iframe{width:calc(100% / var(--zoom));height:calc(100% / var(--zoom));border:0;display:block;transform:scale(var(--zoom));transform-origin:0 0}
+.frame.v1{--zoom:1.15}
+
+/* ---------- roll out ---------- */
+.num-list{list-style:none;padding:0;margin:0;display:grid;gap:1.5rem}
+.num-list li{display:flex;gap:1.2rem;font-size:2.4rem;line-height:1.2}
+.num-list li b{font-weight:500;width:1.5em;flex:0 0 auto}
+.num-list li.step b{color:var(--dim)} .num-list li.step.on b{color:var(--primary)}
+
+/* ---------- analysis ---------- */
+.two{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:2.2rem;min-height:0;height:100%}
+.csv{border:1px solid var(--line);border-radius:1rem;overflow:hidden;background:var(--card);box-shadow:var(--shadow-lg);min-width:0;display:flex;flex-direction:column;min-height:0}
+.csv .f{display:flex;gap:.6rem;align-items:center;padding:.8rem 1.1rem;background:var(--primary-soft);font-size:1.15rem}
+.csv pre{margin:0;padding:1.1rem;font-family:var(--mono);font-size:.82rem;line-height:1.6;overflow:auto;background:#FAFAFC;white-space:pre-wrap;word-break:break-word;flex:1;min-height:0}
+.pipe{display:grid;gap:1rem;align-content:center}
+.pipe .p{display:flex;gap:1.1rem;align-items:center;border:1px solid var(--line);border-radius:1rem;padding:1.3rem 1.4rem;background:var(--card);box-shadow:var(--shadow);font-size:1.25rem}
+.pipe .p svg{width:2.2rem;height:2.2rem;flex:0 0 auto}
+.pipe .p b{font-weight:600;font-size:1.6rem;margin-right:.5rem}
+.pipe .p span{color:var(--muted)}
+.pipe .p.step{opacity:.4;color:var(--ink)} .pipe .p.step.on{opacity:1;border-color:var(--primary-mid)}
+.pipe .p.step.on svg{color:var(--primary)}
+
+/* ---------- value banner ---------- */
+.banner{display:flex;gap:1.2rem;align-items:center;background:var(--primary);color:#fff;border-radius:1.1rem;padding:1.4rem 1.8rem;font-size:1.65rem;box-shadow:var(--shadow-lg)}
+.banner svg{width:2.4rem;height:2.4rem;flex:0 0 auto}
+.banner b{font-weight:600}
+
+/* ---------- chapter ---------- */
+.chapter{background:#141926;color:#fff}
+.chapter .eyebrow{color:var(--primary-mid)}
+.chapter .lead{color:#CBD0D9}
+.journey{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:1.4rem;align-items:stretch}
+.journey .j{border:1px solid #3A4252;border-radius:1.4rem;padding:2.6rem 2.4rem;display:grid;gap:1rem;align-content:start;background:rgba(255,255,255,.03)}
+.journey .j small{font-family:var(--mono);font-size:1.2rem;color:#A3AAB8}
+.journey .j b{font-weight:400;font-size:3rem;line-height:1.1}
+.journey .j p{color:#C2C8D3;font-size:1.65rem;line-height:1.4}
+.journey .j svg{width:3.6rem;height:3.6rem;color:var(--primary-mid)}
+.journey .j.mid{border-color:#5B6476}
+.journey .j.now{border-color:var(--primary-mid);background:rgba(124,58,237,.24)}
+.journey .j.now p{color:#DED6FB}
+.journey .arrow{align-self:center;font-size:2.6rem;color:var(--primary-mid)}
+
+/* ---------- comparison table ---------- */
+.tblwrap{border-radius:1.1rem;box-shadow:var(--shadow-lg);background:var(--card);overflow:hidden}
+.cmp{width:100%;border-collapse:collapse;font-size:1.42rem}
+.cmp th{text-align:left;font-weight:600;padding:.9rem 1.4rem;background:var(--alt2);font-size:.9rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.cmp th.v2{color:var(--primary);background:var(--primary-soft)}
+.cmp td{padding:.72rem 1.5rem;border-top:1px solid var(--line);vertical-align:top}
+.cmp td:first-child{color:var(--muted);width:21%;font-size:1.22rem;padding-top:.85rem}
+.cmp td.v2{background:var(--primary-tint)}
+.cmp tr.new td.v2{font-weight:500}
+.cmp tr.step td{color:var(--dim)} .cmp tr.step.on td{color:var(--ink)} .cmp tr.step.on td:first-child{color:var(--muted)}
+.cmp .tag{margin-left:.6rem;vertical-align:.1em}
+
+/* ---------- repo pipeline ---------- */
+.repo{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem;position:relative}
+.rstep{background:var(--card);border:1px solid var(--line);border-radius:1.2rem;padding:1.9rem 1.6rem;display:grid;gap:.8rem;align-content:start;box-shadow:var(--shadow);position:relative}
+.rstep:not(.on)::after{opacity:0}
+.rstep::after{content:"→";position:absolute;right:-1rem;top:2.4rem;transform:translateX(50%);font-size:1.8rem;color:var(--primary);z-index:2}
+.rstep:last-child::after{display:none}
+.rstep svg{width:3rem;height:3rem;color:var(--primary)}
+.rstep b{font-weight:600;font-size:1.75rem}
+.rstep span{color:var(--muted);font-size:1.35rem;line-height:1.35}
+.rstep.hot{background:var(--primary-tint);border-color:var(--primary-mid)}
+.wins{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.win{border-radius:1.2rem;padding:1.8rem 2rem;background:var(--green-soft);border:1px solid var(--green-line);display:grid;gap:.4rem;box-shadow:var(--shadow)}
+.win b{font-weight:600;font-size:1.85rem;color:#14532D}
+.win span{font-size:1.4rem;line-height:1.35;color:#24553A}
+
+/* ---------- split with prototype ---------- */
+.split{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.7fr);gap:2.6rem;height:100%;min-height:0}
+.split .big-list{align-content:center}
+.split .big-list{justify-self:start}
+
+/* ---------- bias ---------- */
+.bias{display:grid;gap:1.1rem}
+.bias .ctx{display:flex;gap:1rem;align-items:center;font-size:1.5rem;color:var(--muted)}
+.bias .ctx .tag{font-size:.8rem}
+.bias .b{border-radius:1.1rem;padding:1.4rem 1.8rem;display:grid;grid-template-columns:9rem 1fr;gap:1.4rem;align-items:baseline;font-size:2.4rem;box-shadow:var(--shadow);padding-block:1.9rem}
+.bias .b small{font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.bias .before{background:var(--card);border:1px solid var(--line)}
+.bias .flag{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line);font-size:2rem}
+.bias .after{background:var(--green-soft);color:#14532D;border:1px solid var(--green-line)}
+.bias .b.step{opacity:.22;color:inherit} .bias .b.step.on{opacity:1}
+.bias .before.step{color:var(--ink)}
+
+/* ---------- choice ---------- */
+.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.3rem}
+.choice{background:var(--card);border:1px solid var(--line);border-radius:1.3rem;padding:2.4rem 2.2rem;display:grid;gap:1.2rem;align-content:start;box-shadow:var(--shadow-lg)}
+.choice svg{width:2.8rem;height:2.8rem;color:var(--primary)}
+.choice h3{font-size:2.5rem;line-height:1.12}
+.choice p{font-size:1.55rem;color:var(--muted);line-height:1.38}
+.choice .verdict{font-size:1.5rem;font-weight:600;color:var(--ink);border-top:1px solid var(--line);padding-top:.9rem}
+.choice.here{border-color:var(--primary-mid);background:var(--primary-tint)}
+.choice.here .tag{justify-self:start}
+
+
+/* ---------- AI now ---------- */
+.scale2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.side{border-radius:1.3rem;padding:2.4rem 2.6rem;display:grid;gap:1.3rem;align-content:start;box-shadow:var(--shadow-lg)}
+.side h3{font-size:2.5rem;display:flex;gap:.8rem;align-items:center}
+.side h3 svg{width:2.4rem;height:2.4rem}
+.side ul{list-style:none;margin:0;padding:0;display:grid;gap:1.1rem}
+.side li{font-size:1.95rem;display:flex;gap:.8rem;align-items:baseline}
+.side li::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:currentColor;flex:0 0 auto;transform:translateY(-.15rem)}
+.side.gain{background:var(--green-soft);border:1px solid var(--green-line);color:#14532D}
+.side.cost{background:var(--amber-soft);border:1px solid var(--amber-line);color:#6E4200}
+
+
+/* ---------- new fails ---------- */
+.fails2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:2.6rem;align-items:center}
+.fails2 h3{font-size:1rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;color:var(--primary);margin-bottom:1.3rem}
+.fails2 .big-list{justify-self:start}
+.older{background:var(--card);border:1px solid var(--line);border-radius:1.2rem;padding:1.6rem 1.9rem;box-shadow:var(--shadow-lg)}
+.older h3{color:var(--muted)}
+.older ul{list-style:none;margin:0;padding:0;display:grid;gap:.75rem}
+.older li{display:flex;gap:.7rem;align-items:flex-start;font-size:1.45rem;color:var(--muted)}
+.older li svg{width:1.15rem;height:1.15rem;flex:0 0 auto;margin-top:.25rem;color:#9AA1AD}
+
+/* ---------- guide ---------- */
+.guide-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.9rem}
+.gstep{background:var(--card);border:1px solid var(--line);border-radius:1rem;padding:1rem 1.2rem;display:grid;grid-template-columns:auto 1fr;column-gap:.9rem;align-items:center;box-shadow:var(--shadow);position:relative}
+.gstep small{font-family:var(--mono);color:var(--primary);font-size:1.4rem;font-weight:600;grid-row:span 2}
+.gstep b{font-weight:600;font-size:1.3rem}
+.gstep span{color:var(--muted);font-size:1.05rem}
+.gstep.new{border-color:var(--primary-mid);background:var(--primary-tint)}
+.gstep.new .tag{position:absolute;top:.7rem;right:.7rem}
+.subhead{font-size:1rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;color:var(--muted)}
+.bp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem}
+.bp div{background:var(--card);border-radius:1rem;padding:1.05rem 1.25rem;font-size:1.12rem;line-height:1.42;border:1px solid var(--line);box-shadow:var(--shadow)}
+.bp div.new{border-color:var(--primary-mid);background:var(--primary-tint)}
+.bp .tag{margin-right:.35rem}
+
+/* ---------- thanks ---------- */
+.thanks{align-items:center;justify-content:center;text-align:center;gap:3rem}
+.thanks h2{font-size:6rem}
+.qrs{display:flex;gap:4.5rem;justify-content:center}
+.qr{display:grid;justify-items:center;gap:.9rem}
+.qr .box{width:16rem;height:16rem;background:#fff;border-radius:1.3rem;box-shadow:var(--shadow-lg);display:grid;place-items:center;padding:1rem}
+.qr .box img,.qr .box canvas{max-width:100%;max-height:100%}
+.qr p{color:var(--muted);font-size:1.4rem}
+
+/* ---------- dialogs ---------- */
+dialog{border:0;border-radius:1.2rem;padding:0;max-width:min(68rem,92vw);width:100%;box-shadow:0 24px 70px rgba(17,24,39,.45)}
+dialog::backdrop{background:rgba(17,24,39,.55);backdrop-filter:blur(3px)}
+.dlg{padding:1.8rem 2rem;display:grid;gap:1.1rem;max-height:88vh;overflow:auto;font-size:1.15rem}
+.dlg-h{display:flex;justify-content:space-between;align-items:center;gap:.8rem}
+.dlg-h h3{font-size:1.8rem}
+.x{border:0;background:var(--alt2);width:2.4rem;height:2.4rem;border-radius:50%;cursor:pointer;font-size:1.3rem}
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.dd div{border:1px solid var(--line);border-radius:.9rem;padding:1.2rem;display:grid;gap:.6rem}
+.dd h4{font-weight:600;font-size:1.3rem}
+.video{aspect-ratio:16/9;width:100%;border-radius:.8rem;overflow:hidden;background:#000}
+.video iframe{width:100%;height:100%;border:0}
+.prompt-box{white-space:pre-wrap;font-family:var(--mono);font-size:.88rem;background:#F6F7FA;border:1px solid var(--line);border-radius:.8rem;padding:1.2rem;line-height:1.6;margin:0}
+.prompt-box .tg{color:var(--primary);font-weight:600}
+.trick{background:var(--alt2);border-radius:.7rem;padding:.9rem 1.1rem}
+.trick i{color:var(--muted)}
+
+
+/* ---------- unified lists: one size everywhere, block centred, text left ---------- */
+:root{--list:2.2rem}
+.big-list,.num-list{justify-self:center;width:fit-content;max-width:100%}
+.big-list li,.big-list.sm li,.num-list li{font-size:var(--list)}
+.big-list{gap:1.05rem}
+.num-list{gap:1.05rem}
+.toc-list a{color:inherit;text-decoration:none;display:flex;gap:1.1rem;align-items:center}
+.toc-list a:hover{color:var(--primary)}
+.toc-list svg{width:.95em;height:.95em;color:var(--primary);flex:0 0 auto}
+.toc-list .tag{font-size:.8rem;margin-left:.4rem}
+
+/* ---------- cards that appear one per click ---------- */
+.reveal.step{opacity:0;transform:translateY(.7rem);transition:opacity .45s ease, transform .45s ease;color:inherit;pointer-events:none}
+.reveal.step.on{opacity:1;transform:none;color:inherit;pointer-events:auto}
+.banner.reveal.step,.banner.reveal.step.on{color:#fff}
+
+/* ---------- Claude conversation mock ---------- */
+.chat{background:var(--card);border:1px solid var(--line);border-radius:1.3rem;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;min-height:0;height:100%;overflow:hidden}
+.chat-h{display:flex;align-items:center;gap:.7rem;padding:.9rem 1.4rem;border-bottom:1px solid var(--line);font-size:1.05rem;color:var(--muted)}
+.chat-h b{color:var(--ink);font-weight:600}
+.chat-b{flex:1;min-height:0;padding:1.1rem 1.3rem;display:flex;flex-direction:column;gap:.75rem;overflow:hidden;justify-content:flex-start}
+.msg{max-width:88%;font-size:1.05rem;line-height:1.38}
+.msg.user{align-self:flex-end;background:var(--alt2);border-radius:1.1rem 1.1rem .3rem 1.1rem;padding:.85rem 1.1rem}
+.msg.ai{align-self:flex-start;display:grid;grid-template-columns:auto 1fr;gap:.8rem;max-width:100%}
+.av{width:2rem;height:2rem;border-radius:50%;background:#D97757;color:#fff;display:grid;place-items:center;font-weight:700;font-size:.95rem}
+.ai-body{display:grid;gap:.5rem}
+.sug{border:1px solid var(--line);border-radius:.8rem;padding:.55rem .9rem;display:grid;grid-template-columns:1fr auto;gap:.2rem 1rem;align-items:center}
+.sug b{font-weight:600}
+.sug span{grid-column:1;color:var(--muted);font-size:.95rem}
+.sug .acts{grid-row:1 / span 2;grid-column:2;display:flex;gap:.4rem}
+.pill{font-size:.9rem;border-radius:999px;padding:.3rem .8rem;border:1px solid var(--line);background:var(--card);white-space:nowrap}
+.pill.go{background:var(--primary);border-color:var(--primary);color:#fff}
+.pill.done{background:var(--green-soft);border-color:var(--green-line);color:var(--green)}
+.warnline{background:var(--amber-soft);border:1px solid var(--amber-line);color:var(--amber);border-radius:.8rem;padding:.5rem .9rem;font-size:.95rem}
+.opt{display:grid;grid-template-columns:auto 1fr auto;gap:.8rem;align-items:center;border:1px solid var(--line);border-radius:.8rem;padding:.4rem .9rem;line-height:1.3}
+.opt i{width:1.15rem;height:1.15rem;border:2px solid #9AA1AD;border-radius:.3rem}
+.opt.on{border-color:var(--primary-mid);background:var(--primary-tint)}
+.opt.on i{background:var(--primary);border-color:var(--primary)}
+.opt small{color:var(--muted);font-size:.88rem}
+.chip2{font-family:var(--mono);font-size:.82rem;padding:.15rem .5rem;border-radius:999px;white-space:nowrap}
+.chip2.ai{background:#DFF2F3;color:#0D6E78} .chip2.you{background:var(--primary-soft);color:var(--primary)}
+.chat-in{border-top:1px solid var(--line);padding:.8rem 1.4rem;color:var(--muted);font-size:1.02rem}
+.split.chatty{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+
+/* ---------- judged ---------- */
+.judge{display:grid;grid-template-columns:1fr auto 1fr;gap:1.6rem;align-items:stretch}
+.jcard{background:var(--card);border:1px solid var(--line);border-radius:1.3rem;padding:2rem 2.2rem;box-shadow:var(--shadow-lg);display:grid;gap:1.1rem;align-content:start}
+.jcard h3{font-size:1rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;color:var(--muted)}
+.jrow{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;font-size:1.8rem;padding:.7rem 0;border-top:1px solid var(--line)}
+.jrow:first-of-type{border-top:0}
+.jrow em{font-style:normal;font-weight:600;font-variant-numeric:tabular-nums}
+.vd{font-size:1.05rem;font-weight:700;padding:.3rem .8rem;border-radius:999px;white-space:nowrap}
+.vd.met{background:var(--green-soft);color:var(--green)} .vd.near{background:var(--amber-soft);color:var(--amber)} .vd.miss{background:var(--red-soft);color:var(--red)}
+.judge .arrow{align-self:center;font-size:2.8rem;color:var(--primary)}
+
+/* ---------- guide: steps left, practices right ---------- */
+.guide2{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);gap:2rem;height:100%;min-height:0}
+.gcol{display:grid;gap:.6rem;align-content:center}
+.gcol .gstep{padding:.7rem 1.1rem}
+.gcol .gstep small{font-size:1.15rem;grid-row:auto}
+.gcol .gstep{grid-template-columns:2.6rem auto 1fr;column-gap:.6rem}
+.gcol .gstep b{font-size:1.25rem}
+.gcol .gstep span{font-size:1.05rem;justify-self:end;text-align:right}
+.gcol .gstep.new .tag{position:static;grid-column:3;justify-self:end;display:none}
+.pcol{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;align-content:center}
+.pcol .subhead{grid-column:1 / -1;margin-bottom:-.2rem}
+.pcol div.bpc{background:var(--card);border-radius:1rem;padding:1.15rem 1.3rem;font-size:1.18rem;line-height:1.45;border:1px solid var(--line);box-shadow:var(--shadow)}
+.pcol div.bpc.new{border-color:var(--primary-mid);background:var(--primary-tint)}
+
+/* ---------- still true (plain list) ---------- */
+.older2 h3{color:var(--muted)}
+.older2 ul{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
+.older2 li{display:flex;gap:.7rem;align-items:flex-start;font-size:1.45rem;color:var(--muted)}
+.older2 li svg{width:1.15rem;height:1.15rem;flex:0 0 auto;margin-top:.3rem;color:#9AA1AD}
+
+/* ---------- icon button ---------- */
+.x svg{width:1.15rem;height:1.15rem}
+.x{display:grid;place-items:center}
+.x.ok{background:var(--green-soft);color:var(--green)}
+.dlg-h .btns{gap:.5rem}
+
+/* ---------- methods ---------- */
+.ab-split{display:flex;height:1rem;border-radius:999px;overflow:hidden;background:#D5D9E0;font-size:.85rem}
+.ab-split i{display:block;height:100%;transition:width .3s}
+.ab-split .sa{background:#9AA1AD} .ab-split .sb{background:var(--primary)}
+.fc-area .bar span{padding:.2rem .5rem;border-radius:.4rem}
+.fc-area .bar .tgt.hit{background:var(--green-soft);color:var(--green)}
+.mc-area .saved{position:absolute;left:1.3rem;bottom:1.3rem;font-weight:600;color:var(--green);font-size:1.2rem}
+
+
+/* ---------- signal containers: border only + icon ---------- */
+.sig{width:1.6rem;height:1.6rem;flex:0 0 auto}
+.flowcard.bad{background:transparent} .flowcard.good{background:transparent}
+.bias .flag{background:transparent;color:var(--ink);border:2px solid var(--amber-line)}
+.bias .flag small{color:var(--amber)}
+.bias .after{background:transparent;color:var(--ink);border:2px solid var(--green-line)}
+.bias .after small{color:var(--green)}
+.bias .b{grid-template-columns:9rem 1fr;}
+.bias .b small{display:flex;gap:.5rem;align-items:center}
+.bias .flag .sig{color:#C07A00} .bias .after .sig{color:var(--green)}
+.win{background:transparent;border:2px solid var(--green-line)}
+.win b{display:flex;gap:.6rem;align-items:center}
+.win b .sig{color:var(--green)}
+.win span{color:var(--muted)}
+.side.gain{background:transparent;border:2px solid var(--green-line);color:var(--ink)}
+.side.cost{background:transparent;border:2px solid var(--amber-line);color:var(--ink)}
+.side.gain h3 svg{color:var(--green)} .side.cost h3 svg{color:#C07A00}
+.side.gain h3{color:#14532D} .side.cost h3{color:var(--amber)}
+.side.gain li::before{background:var(--green)} .side.cost li::before{background:#C07A00}
+.warnline{background:transparent!important;color:var(--ink)!important;border:2px solid var(--amber-line)!important;display:flex;gap:.6rem;align-items:flex-start}
+.warnline .sig{width:1.2rem;height:1.2rem;color:#C07A00;margin-top:.1rem}
+.pill.done{background:transparent;border-color:var(--green-line);display:inline-flex;gap:.3rem;align-items:center}
+.pill.done .sig{width:.95rem;height:.95rem}
+
+/* ---------- new fails: both lists start on the same line ---------- */
+.fails2{align-items:start}
+
+/* ---------- guide: two clearly separate columns, practices as a list ---------- */
+.guide2{gap:3.2rem}
+.pcol{display:block;border-left:2px solid var(--line);padding-left:3.2rem;align-self:center}
+.pcol .subhead{margin:0 0 1.1rem;transition:opacity .45s}
+.pcol:not(:has(.on)) .subhead{opacity:0}
+.bpl{list-style:none;margin:0;padding:0;display:grid;gap:1rem}
+.bpl li{display:flex;gap:.9rem;align-items:flex-start;font-size:1.3rem;line-height:1.42}
+.bpl li::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:var(--primary);flex:0 0 auto;margin-top:.6rem}
+.bpl .tag{margin-right:.35rem}
+
+/* ---------- small or portrait screens: stack, let slides grow ---------- */
+@media (max-width:900px), (max-aspect-ratio:1/1){
+  html{font-size:15px}
+  .slide{height:auto;min-height:100vh;overflow:visible;padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1.25rem,env(safe-area-inset-right,0px))}
+  .rail{display:none}
+  .head-row{flex-direction:column}
+  .head-row > .btns{margin-top:0;flex-wrap:wrap}
+  .toc,.two,.split,.fails2,.method,.choices,.scale2,.bp,.dd,.wins,.repo,.journey{grid-template-columns:1fr}
+  .journey .arrow{transform:rotate(90deg);justify-self:center}
+  .rstep::after{display:none}
+  .benefits,.guide-flow{grid-template-columns:1fr 1fr}
+  .flow{flex-wrap:wrap}
+  .frame{height:auto;aspect-ratio:4/5;--zoom:1}
+  .counter,.reset{position:static;justify-items:start;text-align:left}
+  .figure img{height:auto}
+  .title{font-size:2.4rem} .hero h1{font-size:2.6rem}
+  .big-list li,.num-list li{font-size:1.5rem}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<nav class="rail" id="rail" aria-label="Slides"></nav>
+
+<!-- 1 HERO -->
+<section class="slide" id="hero" data-label="Start">
+  <div class="inner hero">
+    <p class="eyebrow">Øredev 2026</p>
+    <h1>No researchers were harmed in the making of this test suite</h1>
+    <a class="speaker" href="https://heydorka.rocks/" target="_blank" rel="noopener">
+      <img class="me" src="https://heydorka.rocks/doramakszy.png" alt="Dora Makszy">
+      <span class="who"><b>Dora Makszy</b><span>Head of Design</span></span>
+      <img class="logo" src="https://v.imgi.no/581/1540299/6-47c4fbaf-1edc-4e8d-994a-203f21db629f-TOPLOGO.png" alt="Element Logic">
+    </a>
+    <p class="hint">Use <kbd>↓</kbd> <kbd>Space</kbd> to move forward, <kbd>↑</kbd> to go back, <kbd>F</kbd> for full screen</p>
+  </div>
+</section>
+
+<!-- 2 CONTENTS -->
+<section class="slide alt" id="contents" data-label="Contents">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Contents</p><h2 class="title">Overview</h2></div>
+    <div class="body">
+      <ul class="big-list toc-list">
+        <li><a href="#problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>The problem</a></li>
+        <li><a href="#double-diamond"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>Theory &amp; methods</a></li>
+        <li><a href="#failures"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg>Building the tool</a></li>
+        <li><a href="#analysis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>Results &amp; value</a></li>
+        <li><a href="#one-year"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.4 5.6L20 9l-4.5 3.9L17 19l-5-3-5 3 1.5-6.1L4 9l5.6-.4z"/></svg>One year later: the Claude version<span class="tag">New</span></a></li>
+        <li><a href="#choice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 3h5v5M8 3H3v5M3 16v5h5M21 16v5h-5"/><circle cx="12" cy="12" r="3"/></svg>Choosing how to test<span class="tag">New</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 3 PROBLEM -->
+<section class="slide" id="problem" data-label="Problem">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">The problem · summer 2025</p><h2 class="title">Sounds familiar?</h2><p class="lead">We could not afford to guess. But we also could not afford to wait.</p></div>
+    <div class="body">
+      <ul class="big-list" data-icon="dot">
+        <li class="step">No available resources</li>
+        <li class="step">No dedicated researcher</li>
+        <li class="step">Too many unanswered questions</li>
+        <li class="step">Limited time</li>
+        <li class="step">Need evidence, not opinions</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4 DIAMOND -->
+<section class="slide alt" id="double-diamond" data-label="Diamond">
+  <div class="inner">
+    <div class="head-row"><div class="head"><p class="eyebrow">Theory &amp; methods</p><h2 class="title">Shine bright like a diamond</h2><p class="lead">The Double Diamond is a visual representation of the design and innovation process.</p></div>
+      <div class="btns"><button class="btn primary" data-open="dlg-diamond">Details</button></div></div>
+    <div class="body">
+      <div class="figure"><img src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff13ce599-56b4-4bab-ae7c-ab0df20d3556_5400x3038.jpeg" alt="Double Diamond Process"></div>
+      <p class="credit">Illustration by <a href="https://sidsaladi.substack.com/p/week-39-double-diamond-framework" target="_blank" rel="noopener">Sid Saladi</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 THEORY -->
+<section class="slide" id="theory" data-label="Theory">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Theory &amp; methods</p><h2 class="title">UX research 101</h2><p class="lead">Before you build, make sure it solves the right problem in the right way. UX research helps you evaluate and validate before you decide.</p></div>
+    <div class="body">
+      <div id="flowcard" class="flowcard bad" role="button" tabindex="0" aria-label="Switch between without and with UX research">
+        <h3 id="flow-title"></h3><div class="flow" id="flow"></div><div id="flow-extra"></div>
+      </div>
+      <p class="toggle-hint">Click the card to compare.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 METHODS -->
+<section class="slide alt" id="methods" data-label="Methods">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Theory &amp; methods</p><h2 class="title">Methods in practice</h2></div>
+    <div class="body fill" style="grid-template-rows:auto 1fr">
+      <div class="tabs" role="tablist" id="mtabs"></div>
+      <div class="method" id="mpanel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 PLAN -->
+<section class="slide" id="research-plan" data-label="Plan">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Theory &amp; methods</p><h2 class="title">From problem to plan</h2></div>
+    <div class="body"><div class="plan" id="plan"></div></div>
+  </div>
+</section>
+
+<!-- 8 FAILURES -->
+<section class="slide alt" id="failures" data-label="Failures">
+  <div class="inner">
+    <div class="head-row"><div class="head"><p class="eyebrow">Building the tool</p><h2 class="title">Uhm, well.</h2><p class="lead">Not everything worked on the first try.</p></div>
+      <div class="btns"><button class="btn" data-video="Bjrl0S2JtLI" data-title="The failure prototype"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3l14 9-14 9z"/></svg>Watch the video</button>
+      <a class="btn primary" href="https://pacing-sable-63367607.figma.site/" target="_blank" rel="noopener">View the failure prototype ↗</a></div></div>
+    <div class="body"><ul class="big-list" id="fail-list"></ul></div>
+  </div>
+</section>
+
+<!-- 9 CRAFT -->
+<section class="slide" id="building" data-label="Build">
+  <div class="inner">
+    <div class="head-row"><div class="head"><p class="eyebrow">Building the tool</p><h2 class="title">Building the tool</h2><p class="lead">A structured command for the AI tool is basically a good definition of what you want to build and why.</p></div>
+      <div class="btns"><button class="btn primary" data-open="dlg-tricks">Prompt tricks</button></div></div>
+    <div class="body">
+      <div class="craft">
+        <div class="c step"><b>C</b><span><em>Context:</em> define the research goals and constraints. What problem are you solving? What are the limitations?</span></div>
+        <div class="c step"><b>R</b><span><em>Role:</em> specify the expertise level and perspective. Who is performing this task?</span></div>
+        <div class="c step"><b>A</b><span><em>Action:</em> describe the specific task to complete. What exact steps should be taken?</span></div>
+        <div class="c step"><b>F</b><span><em>Format:</em> specify the output format and structure. How should the result be delivered?</span></div>
+        <div class="c step"><b>T</b><span><em>Target audience:</em> define who will use or consume this. Who is the end user?</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 DEMO v1 -->
+<section class="slide alt" id="demo" data-label="Demo v1">
+  <div class="inner">
+    <div class="head-row"><div class="head"><p class="eyebrow">Building the tool</p><h2 class="title">Getting there</h2></div>
+      <div class="btns"><button class="btn" data-video="SfGaTUR5-MY" data-title="Getting there"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3l14 9-14 9z"/></svg>Watch the video</button>
+      <a class="btn primary" href="https://steel-cursor-72959181.figma.site/" target="_blank" rel="noopener">Open in new tab ↗</a></div></div>
+    <div class="body fill"><div class="frame v1"><iframe data-src="https://steel-cursor-72959181.figma.site/" title="Test suite version 1 (Figma Make)"></iframe></div></div>
+  </div>
+</section>
+
+<!-- 11 ROLL OUT -->
+<section class="slide" id="roll-it-out" data-label="Roll out">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Building the tool</p><h2 class="title">Roll it out</h2><p class="lead">Running the research: trusting the participants.</p></div>
+    <div class="body">
+      <ol class="num-list">
+        <li class="step"><b>1.</b>Participants should record themselves</li>
+        <li class="step"><b>2.</b>Participants should share their screens</li>
+        <li class="step"><b>3.</b>Participants should narrate what they think</li>
+        <li class="step"><b>4.</b>Share recording and the exported data</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 12 ANALYSIS -->
+<section class="slide alt" id="analysis" data-label="Analysis">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Value</p><h2 class="title">From CSV to insights</h2></div>
+    <div class="body fill">
+      <div class="two">
+        <div class="csv"><div class="f"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6D28D9" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>complete_testing_results.csv</div>
+<pre>Module,Tasks,Total time,Success rate,Clicks/Actions,Avg Task Time
+Search,4,35s,100%,25,9s
+Navigation,2,221s,100%,136,111s
+Versioning,3,56s,100%,6 / 6,19s
+
+NAVIGATION CARD SORTING RESULTS
+Category,Items Count,Is Custom,Items
+Inbound,2,No,Goods receiving; Incoming returns overview
+Outbound,4,No,Advance shipping notice; Order batching; Review order status; Reprinting
+Inventory,2,No,Inspection; Compression
+Control Room,13,No,Review inbound order status; Review outbound order status; Picking strategies; Conveyor status; Review process engine status; Robotic piece picking console; PLC Alerts; Set robot arm in maintenance mode; Staff planning; Shift planning; Alarm center; Review stock deviations; Review material master data
+Configuration,12,No,AutoStore grid configuration; Conveyor configuration; Configure picking workflow; Configure putaway workflow; Review external communications; Notification chain configuration; Change language settings; Define base units for length; Edit user privileges; Edit user roles; Add printing service; Add shipping service
+Insights,1,No,Robotic piece picking insight
+Settings,4,Yes,Software version; Get help; Create service ticket; Schedule software upgrade
+Logs,6,Yes,Order logs; Stock ledger; Audit trail; Event log; Printing log; Notification log</pre></div>
+        <div class="pipe">
+          <div class="p step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg><div><b>Export</b><span>Extract data from the tool</span></div></div>
+          <div class="p step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg><div><b>Consolidate</b><span>Combine multiple sessions</span></div></div>
+          <div class="p step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><div><b>Aggregate</b><span>Group and summarize data</span></div></div>
+          <div class="p step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><div><b>Analyze</b><span>Find patterns and insights</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 RESULTS -->
+<section class="slide" id="results" data-label="Results">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Value</p><h2 class="title">The results</h2></div>
+    <div class="body">
+      <ul class="big-list" data-icon="check">
+        <li class="step">Test users could use the tool async with video recording</li>
+        <li class="step">Data export available for analysis</li>
+        <li class="step">Finished testing within one week</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 14 VALUE -->
+<section class="slide alt" id="value" data-label="Value">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Value</p><h2 class="title">Business value</h2></div>
+    <div class="body">
+      <ul class="big-list" data-icon="check">
+        <li class="step">AI handled busywork, humans handled critical thinking</li>
+        <li class="step">Combined async quantitative data with in-depth qualitative interviews</li>
+        <li class="step">Reduced time-to-insight from weeks to days</li>
+        <li class="step">Data-driven decisions replaced gut feelings</li>
+        <li class="step">Lower risk by validating before building</li>
+        <li class="step">Established a reusable, scalable tool within one month</li>
+      </ul>
+      <div class="banner step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><span><b>It paid off.</b> The study gave us a business edge, and its findings turned into actionable next steps.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 ONE YEAR LATER -->
+<section class="slide chapter" id="one-year" data-label="One year later" data-sep="1">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">One year later</p><h2 class="title">Same problem. Different tools.</h2>
+      <p class="lead">In 2025, AI helped me build a test. In 2026, AI sits inside the test, and the researcher still sets the bar.</p></div>
+    <div class="body">
+      <div class="journey">
+        <div class="j step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg><small>Summer 2025</small><b>Version 1</b><p>Figma Make builds a mock test tool. AI generates the prototype.</p></div>
+        <span class="arrow step reveal" aria-hidden="true">→</span>
+        <div class="j mid step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><small>2025 → 2026</small><b>A business edge</b><p>The findings turned into actionable steps. Since then the company has moved fully to smart use of AI, so the tool had to grow too.</p></div>
+        <span class="arrow step reveal" aria-hidden="true">→</span>
+        <div class="j now step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.4 5.6L20 9l-4.5 3.9L17 19l-5-3-5 3 1.5-6.1L4 9l5.6-.4z"/></svg><small>Autumn 2026</small><b>Version 2</b><p>Built with Claude, inside the real product. AI recommends, checks and drafts. The researcher decides.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 WHAT CHANGED -->
+<section class="slide" id="v1-v2" data-label="What changed">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">One year later</p><h2 class="title">What changed</h2></div>
+    <div class="body">
+      <div class="tblwrap"><table class="cmp">
+        <thead><tr><th></th><th>v1 · Figma Make, 2025</th><th class="v2">v2 · Claude, 2026</th></tr></thead>
+        <tbody>
+          <tr class="step"><td>What to test</td><td>I decided alone</td><td class="v2">Claude recommends, I decide</td></tr>
+          <tr class="step"><td>Pass / fail bar</td><td>Set by hand, slow to define objectively</td><td class="v2">Claude proposes targets per metric, I confirm them</td></tr>
+          <tr class="step new"><td>Test screens<span class="tag">New</span></td><td>Mock screens I drew by hand</td><td class="v2">The real product, from my repository</td></tr>
+          <tr class="step new"><td>Tasks<span class="tag">New</span></td><td>Invented to fit the mock</td><td class="v2">Built from the hypotheses and what the product can really do</td></tr>
+          <tr class="step"><td>Task wording</td><td>Checked by me</td><td class="v2">Bias check flags leading task briefs</td></tr>
+          <tr class="step"><td>Analysis</td><td>Manual, from CSV</td><td class="v2">Measured against the targets, plus an AI draft</td></tr>
+          <tr class="step new"><td>Keeping it current<span class="tag">New</span></td><td>Rebuild when the product changes</td><td class="v2">Evolves with the code in the same repository</td></tr>
+          <tr class="step"><td>Build time</td><td>About a month</td><td class="v2">Hours to days</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 IN THE REPO -->
+<section class="slide alt" id="repo" data-label="In the repo">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">One year later · Claude Code</p><h2 class="title">The test lives in the real product</h2>
+      <p class="lead">Claude builds the test into my own repository, so participants test the real thing, not a mock I drew.</p></div>
+    <div class="body" style="gap:2rem">
+      <div class="repo">
+        <div class="rstep step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg><b>Hypotheses</b><span>I write what we need to learn</span></div>
+        <div class="rstep hot step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.4 5.6L20 9l-4.5 3.9L17 19l-5-3-5 3 1.5-6.1L4 9l5.6-.4z"/></svg><b>Claude agent</b><span>Turns each hypothesis into tasks that fit what the product can do</span></div>
+        <div class="rstep hot step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3-10.5 6"/></svg><b>Repository</b><span>Implements the tasks and tracking next to the product code</span></div>
+        <div class="rstep step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><b>Participant</b><span>Works in the real interface</span></div>
+        <div class="rstep step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg><b>Results</b><span>Measured against the targets I set</span></div>
+      </div>
+      <div class="wins">
+        <div class="win step reveal"><b><svg class="sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>No more mock screens</b><span>I no longer invent and draw mock tasks, which used to take most of the time.</span></div>
+        <div class="win step reveal"><b><svg class="sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>Fewer misunderstandings</b><span>People react to the real product, so feedback is not lost in translation.</span></div>
+        <div class="win step reveal"><b><svg class="sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>Always up to date</b><span>The test changes with the code, in the same repository.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 RECOMMEND -->
+<section class="slide" id="recommend" data-label="AI recommends">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">One year later · Test Suite 2.0</p><h2 class="title">AI recommends, humans decide</h2></div>
+    <div class="body fill">
+      <div class="split chatty">
+        <ul class="big-list" data-icon="dot">
+          <li class="step">Start from the goal, the people and the hypotheses</li>
+          <li class="step">Claude turns it into test scenarios that fit the product</li>
+          <li class="step">Every suggestion is Apply or Skip</li>
+          <li class="step">It warns you about weak methods</li>
+        </ul>
+        <div class="chat" aria-label="Example conversation with Claude">
+          <div class="chat-h"><span class="av">C</span><b>Claude</b> · test set-up</div>
+          <div class="chat-b">
+            <div class="msg user">Hypothesis H1: a first-time user can tell where they are in Site Designer and what the screen is for. 6 supervisors, 20 minutes, async. Suggest test scenarios.</div>
+            <div class="msg ai"><span class="av">C</span><div class="ai-body"><p>Here are three scenarios for H1, using what Site Designer can do today:</p>
+              <div class="sug"><b>1 · Where am I?</b><span>First look at a configured layout. Ask where they are and what the screen is for.</span><div class="acts"><span class="pill done"><svg class="sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>Applied</span></div></div>
+              <div class="sug"><b>2 · Find the controller</b><span>“Conveyor C2 is not responding. Find out which controller it talks to.”</span><div class="acts"><span class="pill done"><svg class="sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>Applied</span></div></div>
+              <div class="sug"><b>3 · Is it ready?</b><span>An incomplete layout. Ask whether it is ready to go live.</span><div class="acts"><span class="pill">Skip</span><span class="pill go">Apply</span></div></div>
+              <p class="warnline"><svg class="sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg><span>A preference question alone will not tell you whether people can find their way. Pair it with a task.</span></p></div></div>
+          </div>
+          <div class="chat-in">Reply to Claude…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 CALIBRATE -->
+<section class="slide alt" id="calibrate" data-label="Calibrate">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">One year later · Test Suite 2.0</p><h2 class="title">Calibration: you set the bar</h2></div>
+    <div class="body fill">
+      <div class="split chatty">
+        <ul class="big-list" data-icon="dot">
+          <li class="step">One exact target per metric</li>
+          <li class="step">Each value shows its source: default, AI, or you</li>
+          <li class="step">Your number always wins</li>
+          <li class="step">Claude says why it suggests each value</li>
+        </ul>
+        <div class="chat" aria-label="Example conversation with Claude">
+          <div class="chat-h"><span class="av">C</span><b>Claude</b> · calibration</div>
+          <div class="chat-b">
+            <div class="msg user">What should we measure for “Where am I?”, and what is a good bar?</div>
+            <div class="msg ai"><span class="av">C</span><div class="ai-body"><p>I suggest these metrics. Pick the ones that fit:</p>
+              <div class="opt on"><i></i><span><b>Task success ≥ 80%</b><br><small>A common bar for a first-look task</small></span><span class="chip2 ai">AI suggested</span></div>
+              <div class="opt"><i></i><span><b>Median time ≤ 60 s</b><br><small>Useful later, when speed matters</small></span><span class="chip2 ai">AI suggested</span></div>
+              <div class="opt on"><i></i><span><b>SEQ ≥ 5.5</b> <small>(1–7)</small><br><small>How easy it felt</small></span><span class="chip2 ai">AI suggested</span></div>
+              <div class="opt"><i></i><span><b>Confidence ≥ 4</b> <small>(1–5)</small><br><small>Spots people who are sure but wrong</small></span><span class="chip2 ai">AI suggested</span></div></div></div>
+            <div class="msg user">Use success and SEQ, but set success to 90%.</div>
+            <div class="msg ai"><span class="av">C</span><div class="ai-body"><p>Done. Success ≥ 90% <span class="chip2 you">set by you</span> and SEQ ≥ 5.5 <span class="chip2 ai">AI suggested</span>. I will not change your value.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 BIAS -->
+<section class="slide" id="bias" data-label="Bias check">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">One year later · Test Suite 2.0</p><h2 class="title">Bias check</h2>
+      <p class="lead">When tasks are written against the real product, menu names leak into the brief easily. Claude flags it.</p></div>
+    <div class="body">
+      <div class="bias">
+        <p class="ctx"><span class="tag">Task brief</span>Site Designer: a conveyor layout with a PLC and a merge</p>
+        <div class="b before step"><small>Before</small><span>“Open <u>Systems &amp; PLCs</u> and check which PLC conveyor C2 is linked to.”</span></div>
+        <div class="b flag step"><small><svg class="sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Flag</small><span>It names the menu and the steps. It tests whether people can follow instructions, not whether they can find their way.</span></div>
+        <div class="b after step"><small><svg class="sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>After</small><span>“Conveyor C2 is not responding. Find out which controller it talks to.”</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 JUDGED -->
+<section class="slide alt" id="judged" data-label="Judged">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">One year later · Test Suite 2.0</p><h2 class="title">Judged, not interpreted</h2>
+      <p class="lead">Nothing new in UX research: we always measured against a bar set in advance. Now that structure is faster to set up.</p></div>
+    <div class="body">
+      <div class="judge">
+        <div class="jcard step reveal"><h3>Before testing · the bar</h3>
+          <div class="jrow"><span>Task success</span><em>≥ 90%</em></div>
+          <div class="jrow"><span>SEQ (how easy it felt)</span><em>≥ 5.5</em></div>
+          <div class="jrow"><span>Median time</span><em>≤ 60 s</em></div></div>
+        <span class="arrow step reveal" aria-hidden="true">→</span>
+        <div class="jcard step reveal"><h3>After 6 sessions · the result</h3>
+          <div class="jrow"><span>Task success <em>67%</em></span><span class="vd miss">Not met</span></div>
+          <div class="jrow"><span>SEQ <em>5.2</em></span><span class="vd near">Just missed</span></div>
+          <div class="jrow"><span>Median time <em>48 s</em></span><span class="vd met">Met</span></div></div>
+      </div>
+      <div class="banner step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg><span><b>H1 is not supported yet.</b> People are fast, but a third of them are wrong about where they are.</span></div>
+      <p class="note">Example numbers, for illustration.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 22 LIVE DEMO -->
+<section class="slide" id="live" data-label="Live demo">
+  <div class="inner">
+    <div class="head-row"><div class="head"><p class="eyebrow">One year later · Usability Lab</p><h2 class="title">Live demo: where am I?</h2>
+      <p class="lead">One task, three questions, then straight to the export.</p></div>
+      <div class="btns"><a class="btn" href="usability-lab/index.html" target="_blank" rel="noopener">Open the builder ↗</a>
+      <a class="btn primary" href="usability-lab/index.html?mode=tester&amp;local=1" target="_blank" rel="noopener">Open as participant ↗</a></div></div>
+    <div class="body fill"><div class="frame" style="--zoom:1.5"><iframe data-src="usability-lab/index.html?mode=tester&amp;local=1" title="Usability Lab, participant view" allow="display-capture; microphone; camera; clipboard-write"></iframe></div></div>
+  </div>
+</section>
+
+<!-- 23 CHOICE -->
+<section class="slide alt" id="choice" data-label="Your choice">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Choosing how to test</p><h2 class="title">You still choose how to test</h2>
+      <p class="lead">Classic methods still work. The AI-built tool gets its discipline from them; it does not replace them.</p></div>
+    <div class="body">
+      <div class="choices">
+        <article class="choice step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M15 14.5a5 5 0 0 1 6.5 4.5"/></svg><h3>Classic methods</h3>
+          <p>Moderated sessions, interviews, card sorting, paper prototypes.</p><p class="verdict">Proven. Needs people and time.</p></article>
+        <article class="choice here step reveal"><span class="tag">This talk</span><h3>AI-built tool</h3>
+          <p>Built and adapted with Claude, runs async on the real product.</p><p class="verdict">Fast. Depends on an AI provider.</p></article>
+        <article class="choice step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><h3>Local model or your own build</h3>
+          <p>An open model on your own machines, or no AI at all.</p><p class="verdict">Predictable. Data stays in-house.</p></article>
+      </div>
+      <div class="banner step reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg><span><b>Need safety and predictability?</b> Use a local model, or build the whole tool yourself.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 24 AI NOW -->
+<section class="slide" id="ai-now" data-label="AI now">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">Choosing how to test</p><h2 class="title">What AI does right now</h2>
+      <p class="lead">It makes us faster. It also makes us depend on things we do not control.</p></div>
+    <div class="body">
+      <div class="scale2">
+        <div class="side gain step reveal"><h3><svg class="sig h" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>It speeds us up</h3>
+          <ul><li>Working prototypes in hours</li><li>Analysis drafts in minutes</li><li>Less busywork for researchers</li><li>Tools that change with the product</li></ul></div>
+        <div class="side cost step reveal"><h3><svg class="sig h" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>It creates dependencies</h3>
+          <ul><li>A provider you do not control</li><li>Models and prices that change</li><li>Data that leaves the building</li><li>Downtime that stops your study</li></ul></div>
+      </div>
+      <div class="banner step reveal" style="background:var(--ink)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span><b>The result:</b> a move toward local models has already started.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 25 NEW FAILS -->
+<section class="slide alt" id="new-fails" data-label="New fails">
+  <div class="inner">
+    <div class="head"><p class="eyebrow">One year later</p><h2 class="title">Uhm, well. Again.</h2><p class="lead">Most of the 2025 failures are still true. These three are new.</p></div>
+    <div class="body top">
+      <div class="fails2">
+        <div><h3>New in 2026</h3>
+          <ul class="big-list" data-icon="x">
+            <li class="step">Accepting AI targets without asking why</li>
+            <li class="step">Mistaking generated example data for real users</li>
+            <li class="step">Letting the AI draft become the report</li>
+          </ul></div>
+        <div class="older2 step reveal"><h3>Still true from 2025</h3><ul id="fail-list-old"></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 26 GUIDE -->
+<section class="slide" id="guide" data-label="Guide">
+  <div class="inner">
+    <div class="head-row"><div class="head"><p class="eyebrow">Value</p><h2 class="title">Rebuild this yourself</h2></div>
+      <div class="btns"><button class="btn primary" data-open="dlg-prompt">Prompt for Claude</button></div></div>
+    <div class="body fill">
+      <div class="guide2">
+        <div class="gcol">
+          <div class="gstep step reveal"><small>01</small><b>Define the problem</b><span>What assumptions need testing?</span></div>
+          <div class="gstep step reveal"><small>02</small><b>Choose methods</b><span>Match methods to questions</span></div>
+          <div class="gstep step reveal"><small>03</small><b>Decide metrics</b><span>Actionable metrics only</span></div>
+          <div class="gstep step reveal new"><small>04</small><b>Calibrate</b><span>Set the bar, let AI challenge it</span></div>
+          <div class="gstep step reveal new"><small>05</small><b>Build in your repo</b><span>Claude agent, real product</span></div>
+          <div class="gstep step reveal"><small>06</small><b>Collect async</b><span>Screen + voice recording</span></div>
+          <div class="gstep step reveal"><small>07</small><b>Export</b><span>ZIP, CSV and JSON</span></div>
+          <div class="gstep step reveal"><small>08</small><b>Analyze</b><span>Humans find patterns</span></div>
+        </div>
+        <div class="pcol"><p class="subhead">Best practices</p>
+          <ul class="bpl">
+            <li class="step reveal"><span>Use structured, constraint-driven prompts and iterate in small increments. Test early, validate AI outputs immediately, and treat AI as a collaborator, not a decision-maker.</span></li>
+            <li class="step reveal"><span>Start with clear assumptions and hypotheses. Choose research methods based on what you actually need to learn, and understand what each method truly measures.</span></li>
+            <li class="step reveal"><span>Measure observable behavior, not opinions alone. Combine quantitative and qualitative insights, and keep tasks realistic, focused, and unbiased.</span></li>
+            <li class="step reveal"><span>Prototype failures are cheaper than production failures. Automate repetitive work, not critical thinking. Data alone is not insight; interpretation still matters.</span></li>
+            <li class="step reveal"><span><span class="tag">New</span> AI proposes targets, the researcher owns them. Write them down before the data arrive.</span></li>
+            <li class="step reveal"><span><span class="tag">New</span> Label generated data everywhere it appears, and never let a draft skip human review.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 27 THANKS -->
+<section class="slide alt" id="thanks" data-label="Thanks">
+  <div class="inner thanks">
+    <h2>Thank you ❤️</h2>
+    <div class="qrs">
+      <div class="qr"><div class="box" id="qr-deck"></div><p>Build your own!</p></div>
+      <div class="qr"><div class="box"><img src="https://heydorka.rocks/qr_linkedin.png" alt="LinkedIn QR code"></div><p>LinkedIn</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIALOGS -->
+<dialog id="dlg-diamond"><div class="dlg"><div class="dlg-h"><h3>Double Diamond Process</h3><button class="x" data-close aria-label="Close">×</button></div>
+  <div class="dd"><div><h4 style="color:#BE185D">Problem space</h4><p><b>Discover:</b> Gather insights, understand users, explore the problem broadly</p><p><b>Define:</b> Synthesize findings, frame the right problem, narrow focus</p></div>
+  <div><h4 style="color:var(--primary)">Solution space</h4><p><b>Develop:</b> Ideate, prototype, test multiple solutions</p><p><b>Deliver:</b> Refine, finalize, ship the validated solution</p></div></div></div></dialog>
+
+<dialog id="dlg-tricks"><div class="dlg"><div class="dlg-h"><h3>Prompt tricks</h3><button class="x" data-close aria-label="Close">×</button></div>
+  <p>When working with Figma Make, use clear and structured prompts to get the best results:</p>
+  <div class="trick"><b>Start with context:</b><br><i>“Perform the following changes...”</i></div>
+  <div class="trick"><b>End with constraints:</b><br><i>“Do not change anything else.”</i></div>
+  <p>This approach ensures precision and prevents unintended modifications to your prototype.</p>
+  <div class="trick" style="background:var(--primary-soft)"><span class="tag">2026</span> <b>With Claude:</b> say what the tool may decide by itself and what the researcher decides. <i>“Suggest targets, but never overwrite a value I set.”</i></div></div></dialog>
+
+<dialog id="dlg-prompt"><div class="dlg"><div class="dlg-h"><h3>Prompt for Claude</h3><div class="btns"><button class="x" id="copy-prompt" aria-label="Copy prompt" title="Copy prompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button><button class="x" data-close aria-label="Close" title="Close">×</button></div></div>
+  <p class="note">The same CRAFT idea, written in tags an agent can parse. Run it in Claude Code inside your product’s repository. Replace the CAPITALS.</p>
+<pre class="prompt-box" id="prompt-text">&lt;context&gt;
+I am a UX researcher. We run unmoderated, async usability tests on PRODUCT NAME,
+the web app in this repository. Participants: PARTICIPANT TYPE, NUMBER people,
+about SESSION LENGTH minutes each, screen and voice recorded.
+We have no dedicated researcher, so the tool must guide the study set-up as well as the session.
+&lt;/context&gt;
+
+&lt;role&gt;
+Act as a senior UX researcher and a front-end developer who knows this codebase.
+&lt;/role&gt;
+
+&lt;hypotheses&gt;
+H1: HYPOTHESIS 1
+H2: HYPOTHESIS 2
+&lt;/hypotheses&gt;
+
+&lt;task&gt;
+Build a usability test tool in this repository, next to the product. It has three parts:
+1. Builder: read the product code and propose one or more tasks per hypothesis that use what
+   the product can really do today. Suggest targets for each task (success rate, median time,
+   SEQ) and flag task briefs that name menu items or describe the steps.
+2. Participant view: welcome and consent, then each task on the real product with a side panel
+   (brief, "I'm done", "I give up", think-aloud reminder), then questions after each task:
+   orientation check, SEQ (1-7) and confidence (1-5). Finish on a page that exports the results.
+3. Results: compare every metric with its target per task and per hypothesis
+   (Met / Partly / Missed) and export ZIP, CSV and JSON.
+Add a small tracking probe to a test build of the product that reports clicks, dead clicks,
+navigation and visible errors to the tool. Keep it out of production builds.
+&lt;/task&gt;
+
+&lt;rules&gt;
+- Never overwrite a target I set; show your suggestion next to it.
+- Never record typed text, only the kind of key pressed.
+- Label generated example data as examples wherever it appears.
+- The tool must also work without an AI connection.
+- Ask me before adding a new dependency.
+&lt;/rules&gt;
+
+&lt;format&gt;
+Work on a new branch. Add a README that explains how to run a study.
+When you are done, list the tasks you created, the hypothesis each one tests,
+and anything in the product you could not test.
+&lt;/format&gt;
+
+&lt;audience&gt;
+Researchers and designers set up the study. PARTICIPANT TYPE take it on a desktop,
+often with little time and mixed English skills.
+&lt;/audience&gt;</pre></div></dialog>
+
+<dialog id="dlg-video"><div class="dlg"><div class="dlg-h"><h3 id="video-title">Video</h3><button class="x" data-close aria-label="Close">×</button></div>
+  <div class="video" id="video-box"></div><p class="note">Not playing? <a id="video-link" href="#" target="_blank" rel="noopener">Open it on YouTube</a></p></div></dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ICONS={
+  check:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6L9 17l-5-5"/></svg>',
+  x:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M18 6L6 18M6 6l12 12"/></svg>',
+  dot:'<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/></svg>'
+};
+$$('[data-icon]').forEach(ul=>ul.querySelectorAll('li').forEach(li=>li.insertAdjacentHTML('afterbegin',ICONS[ul.dataset.icon])));
+
+/* failures: big list on the 2025 slide, small list on the 2026 slide */
+["Testing without a clear hypothesis","Choosing the wrong UX research method","Misleading or biased scenarios","Measuring interactions without understanding what they mean","Confusing preference with usability","Quantitative data without qualitative context","Trusting polished AI-generated prototypes","Replacing critical thinking with prompting"]
+  .forEach(t=>{ $('#fail-list').insertAdjacentHTML('beforeend',`<li class="step">${ICONS.x}${t}</li>`);
+    $('#fail-list-old').insertAdjacentHTML('beforeend',`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg>${t}</li>`); });
+
+/* plan */
+[["Users understand ecosystem structure","Card sorting","Category grouping"],["Navigation is intuitive","First-click testing","Accuracy rate"],["Task completion is efficient","Click count","Average clicks"],["Users prefer new design","A/B testing","Preference rate"],["Interface elements are clear","Misclick detection","Misclick rate"]]
+  .forEach(([h,m,k])=>$('#plan').insertAdjacentHTML('beforeend',`<div class="plan-row step"><div><small>Hypothesis</small><span>${h}</span></div><div class="m"><small>Method</small><span>${m}</span></div><div class="m"><small>Metric</small><span>${k}</span></div></div>`));
+
+/* UX research 101 */
+const SV=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const NODE_ICONS={
+  "Idea":SV('<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/>'),
+  "Research":SV('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>'),
+  "Design":SV('<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.6 7.6"/><circle cx="11" cy="11" r="2"/>'),
+  "Build":SV('<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>'),
+  "Launch":SV('<path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.2 2.2 0 0 0-2.9-.1z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.9A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/>'),
+  "Impact":SV('<path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>'),
+  "Find out later":SV('<path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>')
+};
+const BEN_ICONS={
+  v:SV('<path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4L12 14l-3-3"/>'),
+  d:SV('<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>'),
+  c:SV('<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>'),
+  b:SV('<circle cx="12" cy="8" r="6"/><path d="M15.5 13.2L17 22l-5-3-5 3 1.5-8.8"/>')
+};
+const FLOW={
+  bad:{title:"Without UX research",nodes:["Idea","Build","Launch","Find out later"],extra:'<p class="flow-note">High risk. Expensive changes. Wasted time.</p>'},
+  good:{title:"With UX research",nodes:["Idea","Research","Design","Build","Launch","Impact"],extra:null}
+};
+let flowState="bad";
+function drawFlow(){ const f=FLOW[flowState]; $('#flowcard').className='flowcard '+flowState;
+  $('#flow-title').innerHTML=(flowState==="bad"
+    ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--red)"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>'
+    :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--green)"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>')+f.title;
+  $('#flow').innerHTML=f.nodes.map((n,i)=>`${i?'<span class="line"></span>':''}<span class="node">${NODE_ICONS[n]}<div>${n}</div></span>`).join("");
+  $('#flow-extra').innerHTML=f.extra||`<div class="benefits">${[["v","Validation","Test opinions, find what works"],["d","Educated decisions","Data, not gut opinions"],["c","Developer friendly","Clear requirements"],["b","Better products","User-validated solutions"]].map(([k,t,d])=>`<div>${BEN_ICONS[k]}<b>${t}</b><span>${d}</span></div>`).join("")}</div>`; }
+drawFlow();
+const toggleFlow=()=>{flowState=flowState==="bad"?"good":"bad";drawFlow();};
+$('#flowcard').addEventListener('click',toggleFlow);
+$('#flowcard').addEventListener('keydown',e=>{if(e.key==="Enter"){e.preventDefault();toggleFlow();}});
+
+/* methods in practice: try each method, the counter sits in the card's bottom-right corner */
+const M=[
+ {k:"ab",name:"A/B testing",sub:"Compare two variants",measures:"Preference rate",answers:"“Which option do users prefer?”"},
+ {k:"fc",name:"First-click testing",sub:"Where users click first",measures:"Click location, accuracy",answers:"“Can users find what they need?”"},
+ {k:"cs",name:"Card sorting",sub:"How users categorize information",measures:"Grouping patterns",answers:"“How do users organize content?”"},
+ {k:"mc",name:"Misclick detection",sub:"Identify confusion points",measures:"Misclick rate",answers:"“Where do users struggle?”"},
+ {k:"cc",name:"Click count",sub:"Track task efficiency",measures:"Total clicks",answers:"“How efficient is the flow?”"}
+];
+const fresh=()=>({ab:{a:0,b:0,last:null},fc:{dots:[],hits:0},cs:{pool:["Dashboard","Analytics","Settings","Profile","Reports"],Operations:[],Setup:[],sel:null},mc:{miss:0,saved:false},cc:{open:false,n:0,done:false}});
+let mk="ab", MS=fresh(), bumpNext=false;
+$('#mtabs').innerHTML=M.map(m=>`<button role="tab" data-m="${m.k}">${m.name}</button>`).join("");
+const pc=(k,n)=>n?Math.round(100*k/n):0;
+function counterFor(){
+  if(mk==="ab"){ const s=MS.ab,t=s.a+s.b; if(!t) return ["–","each click is one participant’s vote"];
+    const pa=pc(s.a,t), pb=100-pa; if(pa===pb) return ["50/50",`A ${pa}% · B ${pb}% · ${t} votes`];
+    return [`${Math.max(pa,pb)}% ${pa>pb?"A":"B"}`,`A ${pa}% · B ${pb}% · ${t} vote${t>1?"s":""}`]; }
+  if(mk==="fc"){ const s=MS.fc,t=s.dots.length; if(!t) return ["–","each click is one participant’s first click"];
+    return [`${pc(s.hits,t)}%`,`first clicks on Settings · ${s.hits} of ${t}`]; }
+  if(mk==="cs"){ const s=MS.cs,d=s.Operations.length+s.Setup.length; return [`${d}/5`, "cards sorted"]; }
+  if(mk==="mc"){ const s=MS.mc; return [String(s.miss), s.saved?`misclick${s.miss===1?"":"s"} before Save`:`misclick${s.miss===1?"":"s"} so far`]; }
+  const s=MS.cc; return [String(s.n), s.done?"clicks to reach Notifications":"clicks so far"];
+}
+function drawMethod(){
+  $$('#mtabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.m===mk));
+  const m=M.find(x=>x.k===mk); let play="";
+  if(mk==="ab"){ const s=MS.ab,t=s.a+s.b,pa=pc(s.a,t);
+    play=`<p class="ptask">Which dashboard would you rather use? Every click is one participant.</p><div class="ab"><button data-ab="A" aria-pressed="${s.last==="A"}"><b>Option A</b><span class="note">Traditional</span><div class="a-vis"></div></button><button data-ab="B" aria-pressed="${s.last==="B"}"><b>Option B</b><span class="note">Modern</span><div class="b-vis"><i></i><i></i><i></i><i></i></div></button></div>
+      <div class="ab-split" aria-hidden="true"><i class="sa" style="width:${t?pa:50}%"></i><i class="sb" style="width:${t?100-pa:50}%"></i></div>`; }
+  if(mk==="fc"){ const hit=MS.fc.dots.some(d=>d.ok);
+    play=`<p class="ptask">Task: change your notification settings. Click where you would go first. Every click is one participant.</p><div class="fc-area" id="fc-area"><div class="bar"><span>Home</span><span>Billing</span><span>Team</span><span id="fc-target" class="tgt ${hit?"hit":""}">Settings</span></div><div class="ghost" style="width:70%"></div><div class="ghost" style="width:50%"></div><div class="ghost" style="width:60%"></div><div class="ghost" style="width:40%"></div>${MS.fc.dots.map(d=>`<span class="fc-dot ${d.ok?"":"miss"}" style="left:${d.x}%;top:${d.y}%"></span>`).join("")}</div>`; }
+  if(mk==="cs"){ const s=MS.cs; const card=l=>`<span class="cs-card" draggable="true" data-card="${l}" aria-pressed="${s.sel===l}" role="button" tabindex="0">${l}</span>`;
+    play=`<p class="ptask">Drag each card into the group where you would look for it.</p><div class="cs"><div class="cs-cards">${s.pool.map(card).join("")||'<span class="note">All sorted</span>'}</div>
+      <div class="cs-groups">${["Operations","Setup"].map(g=>`<div class="cs-group" data-group="${g}"><b>${g}</b>${s[g].length?s[g].map(card).join(""):'<span class="empty">Drop cards here</span>'}</div>`).join("")}</div></div>`; }
+  if(mk==="mc"){ const s=MS.mc;
+    play=`<p class="ptask">Task: save your changes. Save is the goal; every other click counts as a misclick.</p><div class="mc-area" id="mc-area"><div class="txt"><i style="width:80%"></i><i style="width:60%"></i><i style="width:70%"></i><i style="width:45%"></i></div>${s.saved?'<span class="saved">✓ Saved</span>':""}<button class="mc-del" data-mc="del">DELETE</button><button class="mc-save" data-mc="save">SAVE</button></div>`; }
+  if(mk==="cc"){ const s=MS.cc;
+    play=`<p class="ptask">Task: turn off notifications.</p><div class="cc"><button class="cc-trigger" data-cc="toggle">Profile <span>▼</span></button>${s.open?`<div class="cc-menu"><button data-cc="Account">Account</button><button data-cc="Notifications">Notifications</button><button data-cc="Sign out">Sign out</button></div>`:""}</div>${s.done?'<p class="ptask" style="color:var(--green);font-weight:600">✓ Notifications reached</p>':""}`; }
+  const [num,label]=counterFor();
+  $('#mpanel').innerHTML=`<div class="left"><div><h3>${m.name}</h3><p class="sub">${m.sub}</p></div><div class="play">${play}</div></div>
+    <div class="meta"><div><small>Measures</small><p>${m.measures}</p></div><div><small>Answers</small><p>${m.answers}</p></div></div>
+    <button class="btn reset" data-mreset>Reset</button>
+    <div class="counter ${bumpNext?"bump":""}" aria-live="polite"><b>${num}</b><span>${label}</span></div>`;
+  bumpNext=false;
+}
+drawMethod();
+const changed=()=>{bumpNext=true;drawMethod();};
+$('#mtabs').addEventListener('click',e=>{const b=e.target.closest('[data-m]'); if(b){mk=b.dataset.m; drawMethod();}});
+function moveCard(l,g){ const s=MS.cs; ["pool","Operations","Setup"].forEach(k=>s[k]=s[k].filter(x=>x!==l)); s[g].push(l); s.sel=null; changed(); }
+$('#mpanel').addEventListener('click',e=>{
+  if(e.target.closest('[data-mreset]')){ MS[mk]=fresh()[mk]; drawMethod(); return; }
+  if(mk==="ab"){ const b=e.target.closest('[data-ab]'); if(b){ const k=b.dataset.ab; MS.ab.last=k; MS.ab[k.toLowerCase()]+=1; changed(); } }
+  if(mk==="fc"){ const a=e.target.closest('#fc-area'); if(a){ const r=a.getBoundingClientRect(); const t=$('#fc-target').getBoundingClientRect(); const pad=10;
+      const ok=e.clientX>=t.left-pad&&e.clientX<=t.right+pad&&e.clientY>=t.top-pad&&e.clientY<=t.bottom+pad;
+      MS.fc.dots.push({x:100*(e.clientX-r.left)/r.width,y:100*(e.clientY-r.top)/r.height,ok}); if(ok) MS.fc.hits++; changed(); } }
+  if(mk==="cs"){ const c=e.target.closest('[data-card]'); const g=e.target.closest('[data-group]');
+    if(c){ MS.cs.sel=MS.cs.sel===c.dataset.card?null:c.dataset.card; drawMethod(); return; }
+    if(g&&MS.cs.sel){ moveCard(MS.cs.sel,g.dataset.group); } }
+  if(mk==="mc"){ const s=MS.mc; if(s.saved||!e.target.closest('.play')) return;
+    if(e.target.closest('[data-mc="save"]')) s.saved=true; else s.miss++; changed(); }
+  if(mk==="cc"){ const s=MS.cc, b=e.target.closest('[data-cc]'); if(!b||s.done) return; s.n++;
+    if(b.dataset.cc==="toggle") s.open=!s.open; else { s.open=false; if(b.dataset.cc==="Notifications") s.done=true; } changed(); }
+});
+$('#mpanel').addEventListener('dragstart',e=>{const c=e.target.closest('[data-card]'); if(c){ e.dataTransfer.setData('text/plain',c.dataset.card); }});
+$('#mpanel').addEventListener('dragover',e=>{const g=e.target.closest('[data-group]'); if(g){ e.preventDefault(); g.classList.add('over'); }});
+$('#mpanel').addEventListener('dragleave',e=>{const g=e.target.closest('[data-group]'); if(g) g.classList.remove('over');});
+$('#mpanel').addEventListener('drop',e=>{const g=e.target.closest('[data-group]'); if(g){ e.preventDefault(); moveCard(e.dataTransfer.getData('text/plain'),g.dataset.group); }});
+
+/* prompt: highlight tags, copy */
+$('#prompt-text').innerHTML=$('#prompt-text').innerHTML.replace(/(&lt;\/?[a-z]+&gt;)/g,'<span class="tg">$1</span>');
+$('#copy-prompt').addEventListener('click',()=>{ const txt=$('#prompt-text').textContent; const b=$('#copy-prompt'); const icon=b.innerHTML;
+  const ok=()=>{ b.classList.add('ok'); b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6L9 17l-5-5"/></svg>'; b.setAttribute('aria-label','Copied'); setTimeout(()=>{ b.classList.remove('ok'); b.innerHTML=icon; b.setAttribute('aria-label','Copy prompt'); },1600); };
+  (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt):Promise.reject()).then(ok,()=>{const r=document.createRange();r.selectNodeContents($('#prompt-text'));const s=getSelection();s.removeAllRanges();s.addRange(r);}); });
+
+/* dialogs + video */
+$$('[data-open]').forEach(b=>b.addEventListener('click',()=>$('#'+b.dataset.open).showModal()));
+$$('[data-video]').forEach(b=>b.addEventListener('click',()=>{ $('#video-title').textContent=b.dataset.title;
+  $('#video-box').innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.video}?autoplay=1&rel=0" title="${b.dataset.title}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  $('#video-link').href='https://www.youtube.com/watch?v='+b.dataset.video; $('#dlg-video').showModal(); }));
+$$('dialog').forEach(d=>{ d.addEventListener('click',e=>{ if(e.target===d||e.target.closest('[data-close]')) d.close(); }); d.addEventListener('close',()=>{ if(d.id==="dlg-video") $('#video-box').innerHTML=""; }); });
+
+/* embedded pages load when near; give keyboard focus back to the deck */
+const io2=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ const f=en.target; if(!f.src) f.src=f.dataset.src; io2.unobserve(f);} }),{rootMargin:"100% 0px"});
+$$('iframe[data-src]').forEach(f=>{
+  io2.observe(f);
+  f.addEventListener('load',()=>setTimeout(()=>{ if(document.activeElement===f && !f.matches(':hover')){ f.blur(); window.focus(); } },300));
+  f.addEventListener('mouseleave',()=>{ if(document.activeElement===f){ f.blur(); window.focus(); } });
+});
+function reclaimFocus(){ const a=document.activeElement; if(a&&a.tagName==="IFRAME"&&!a.matches(':hover')){ a.blur(); window.focus(); } }
+
+/* rail + current slide */
+const slides=$$('.slide');
+$('#rail').innerHTML=slides.map(s=>`${s.dataset.sep?'<span class="sep"></span>':''}<button data-go="${s.id}" aria-label="${s.dataset.label}"><span>${s.dataset.label}</span></button>`).join("");
+$('#rail').addEventListener('click',e=>{const b=e.target.closest('[data-go]'); if(b) go(slides.indexOf(document.getElementById(b.dataset.go)));});
+let cur=0;
+const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ cur=slides.indexOf(en.target); reclaimFocus(); $$('#rail button').forEach((b,i)=>b.setAttribute('aria-current',i===cur)); $('#progress').style.width=(100*cur/(slides.length-1))+'%'; } }); },{threshold:.55});
+slides.forEach(s=>io.observe(s));
+
+/* step reveal */
+document.addEventListener('click',e=>{ const s=e.target.closest('.step'); if(!s) return; if(s.classList.contains('reveal')) s.classList.add('on'); else s.classList.toggle('on'); });
+function go(i){ i=Math.max(0,Math.min(slides.length-1,i)); cur=i; slides[i].scrollIntoView({behavior:"smooth"}); }
+function next(){ const st=[...slides[cur].querySelectorAll('.step:not(.on)')][0]; if(st){ st.classList.add('on'); return; } go(cur+1); }
+function prev(){ const on=[...slides[cur].querySelectorAll('.step.on')]; if(on.length){ on[on.length-1].classList.remove('on'); return; } go(cur-1); }
+document.addEventListener('keydown',e=>{
+  if($('dialog[open]')) return;
+  const tag=(document.activeElement&&document.activeElement.tagName)||"";
+  if(["INPUT","TEXTAREA","SELECT","IFRAME"].includes(tag)) return;
+  if(["ArrowDown","ArrowRight","PageDown"," "].includes(e.key)){ e.preventDefault(); next(); }
+  else if(["ArrowUp","ArrowLeft","PageUp"].includes(e.key)){ e.preventDefault(); prev(); }
+  else if(e.key==="Home"){ e.preventDefault(); go(0); } else if(e.key==="End"){ e.preventDefault(); go(slides.length-1); }
+  else if(e.key==="f"||e.key==="F"){ if(document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{}); }
+});
+
+/* one wheel or trackpad gesture = one slide */
+const stacked=()=>matchMedia('(max-width:900px), (max-aspect-ratio:1/1)').matches;
+function canScroll(el,dy){ return dy>0 ? el.scrollTop+el.clientHeight<el.scrollHeight-1 : el.scrollTop>0; }
+let wheelLock=false, wheelQuiet;
+window.addEventListener('wheel',e=>{
+  if($('dialog[open]')||e.ctrlKey||stacked()) return;
+  const inner=e.target.closest&&e.target.closest('pre,.tblwrap,.prompt-box');
+  if(inner&&canScroll(inner,e.deltaY)) return;
+  if(Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
+  e.preventDefault();
+  clearTimeout(wheelQuiet); wheelQuiet=setTimeout(()=>{wheelLock=false;},220);
+  if(wheelLock||Math.abs(e.deltaY)<3) return;
+  wheelLock=true; go(cur+(e.deltaY>0?1:-1));
+},{passive:false});
+let ty=null;
+window.addEventListener('touchstart',e=>{ ty=(stacked()||e.target.closest('pre,dialog,.frame'))?null:e.touches[0].clientY; },{passive:true});
+window.addEventListener('touchmove',e=>{ if(ty!==null) e.preventDefault(); },{passive:false});
+window.addEventListener('touchend',e=>{ if(ty===null) return; const dy=ty-e.changedTouches[0].clientY; ty=null; if(Math.abs(dy)>40) go(cur+(dy>0?1:-1)); },{passive:true});
+
+/* QR: this deck's address when it runs on the web, otherwise the original QR code */
+const onWeb=/^https?:$/.test(location.protocol) && !/^(localhost|127\.)/.test(location.hostname);
+if(onWeb && window.QRCode){ new QRCode($('#qr-deck'),{text:location.origin+location.pathname,width:300,height:300,colorDark:"#111827",colorLight:"#ffffff"}); }
+else { $('#qr-deck').innerHTML='<img src="https://heydorka.rocks/qr_presentation.png" alt="Presentation QR code">'; }
+</script>
+</body>
+</html>
