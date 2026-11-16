@@ -7,8 +7,9 @@ const speaking = [
         title: "The irresistible UX: the psychology of brainwaves and clickbait",
         event: "Heapcon 2026",
         date: "5-6th November 2026",
-        badge: "Upcoming",
-        status: "upcoming",
+        badge: "Popular",
+        popular: true,
+        status: "past",
         links: [
           { label: "Event", url: "https://heapcon.io/2026" },
         ],
@@ -21,8 +22,9 @@ const speaking = [
         title: "No researchers were harmed in the making of this test suite",
         event: "Øredev 2026",
         date: "4th November 2026",
-        badge: "Upcoming",
-        status: "upcoming",
+        badge: "Popular",
+        popular: true,
+        status: "past",
         links: [
           { label: "Event", url: "https://oredev.org/" },
         ],
@@ -38,8 +40,7 @@ const speaking = [
         title: "Safe by design: the UX of secure banking",
         event: "HelloStavanger 2026",
         date: "21-22th October 2026",
-        badge: "Upcoming",
-        status: "upcoming",
+        status: "past",
         links: [
           { label: "Event", url: "https://www.hellostavanger.no/" },
         ],
@@ -54,8 +55,7 @@ const speaking = [
         title: "Almost hired: the silent filters of belonging",
         event: "TDC 2026",
         date: "19th October 2026",
-        badge: "Upcoming",
-        status: "upcoming",
+        status: "past",
         links: [
           { label: "Event", url: "https://2026.trondheimdc.no/about/" },
         ],
@@ -163,6 +163,8 @@ const speaking = [
         title: "The ripple effect: how information architecture transforms your product, company, and (almost) everything",
         event: "NDC Melbourne 2025",
         date: "29th April - 1st May 2025",
+        badge: "Popular",
+        popular: true,
         status: "past",
         description: [
           "Many companies, especially those started by engineers, initially focus on building a great product. However, as they grow, maintaining organized and scalable information architecture (IA) becomes challenging. This talk highlights the importance of IA for a company’s success, using a mobile app company as an example to illustrate the issues and provide solutions. A well-structured IA ensures sustainable growth, user-friendly products, and aligned teams, ultimately enhancing the product, user experience, and overall organization for continued success.",

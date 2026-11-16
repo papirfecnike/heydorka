@@ -12,9 +12,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 function Home() {
-  const upcomingTalks = speaking
+  const popularTalks = speaking
     .flatMap((year) => year.talks)
-    .filter((talk) => talk.status === "upcoming");
+    .filter((talk) => talk.popular);
 
   return (
     <main className="content">
@@ -62,10 +62,10 @@ function Home() {
         </section>
 
         <section className="upcoming-news">
-          <h3>Upcoming talks</h3>
+          <h3>Most popular talks</h3>
 
           <ul className="upcoming-news-list">
-            {upcomingTalks.map((talk) => (
+            {popularTalks.map((talk) => (
               <li key={talk.id}>
                 <span className="upcoming-dot" />
                 <div className="upcoming-news-content">
