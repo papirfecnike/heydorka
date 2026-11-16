@@ -43,6 +43,7 @@ const speaking = [
         status: "past",
         links: [
           { label: "Event", url: "https://www.hellostavanger.no/" },
+          { label: "Video", url: "https://youtu.be/icpQlSFNaS0" },
         ],
         description: [
           "When it comes to banking applications, security is non-negotiable, but so is the user experience. With sensitive financial data on the line, ensuring that users interact securely with your platform is crucial.",
